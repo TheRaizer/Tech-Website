@@ -1,0 +1,28 @@
+.extra-choices {
+ display: flex;
+ flex-direction: row;
+ justify-content: flex-start;
+ background-color: rgb(30, 14, 167);
+ padding: 1% 1% 1% 1%;
+}
+
+.extra-choices *{
+ background-color: rgb(30, 14, 167);
+}
+
+.extra-choices h3 {
+ padding-right: 1.5%;
+ padding-left: 1.5%;
+}
+
+.extra-choices h3 a{
+ color: lightgrey;
+ text-decoration:none;
+}
+
+.extra-choices h3 a:hover {
+ color: grey;
+}
+.extra-choices h3 a:active {
+ color: darkslategray;
+}

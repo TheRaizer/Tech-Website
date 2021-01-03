@@ -1,0 +1,13 @@
+.image {
+ position: absolute;
+ top: 28%;
+ left: 50%;
+ /* Negative half of height. */
+ margin-left: -25vw;
+ height: 75%;
+ width:50%;
+}
+
+.image-section {
+ height: 90vh;
+}
