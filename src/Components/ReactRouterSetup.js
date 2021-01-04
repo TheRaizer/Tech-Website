@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Home from './Home';
 import Shop from './Shop';
+import PartShop from './PartShop';
 
 function ReactRouterSetup() {
   return (
@@ -14,6 +15,7 @@ function ReactRouterSetup() {
         <Route path='/shop'>
           <Shop />
         </Route>
+        <Route path='/part/:id' children={<PartShop />}></Route>
         {/* The * path means it will run on any path */}
         <Route
           path='*'
