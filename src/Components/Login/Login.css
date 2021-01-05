@@ -1,0 +1,65 @@
+.login-form h1 {
+    font-size: xx-large;
+    font-weight: bold;
+    background-color:darkgrey;
+
+    border-width: 5px;
+    border-radius: 10px;
+
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 6%;
+
+    padding-bottom: 5px;
+}
+
+.login-form h5 {
+    color: rgb(129, 129, 129);
+}
+
+.login-form input {
+    width: 45%;
+    font-size: large;
+    text-align: center;
+}
+
+.login-form div {
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.login-form {
+    display: block;
+    text-align: center;
+    background-color: rgb(233, 233, 233);
+    
+    border-width: 5px;
+    border-radius: 10px;
+
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+
+    padding: 4% 0% 4% 0%;
+
+    min-width: 300px;
+}
+
+.show-btn {
+    width: 10%;
+    font-size: large;
+}
+
+.password {
+    margin-left: 10%;
+}
+.login-form .submit{
+    width: 30%;
+    border-width: 2px;
+    border-style: outset;
+    font-size: larger;
+    font-weight: bold;
+    margin-top: 5%;
+}

@@ -1,8 +1,8 @@
-import React from 'react';
-import HeadingInfo from './HeadingInfo';
-import ExtraChoices from './ExtraChoices';
-import ImageTransitionSection from './ImageTransition';
-import PartsChoices from './PartsChoices';
+import React from "react";
+import HeadingInfo from "./HeadingInfo/HeadingInfo";
+import ExtraChoices from "./ExtraChoices/ExtraChoices";
+import ImageTransitionSection from "./ImageTransition/ImageTransition";
+import PartsChoices from "./PartsChoices/PartsChoices";
 
 function Home() {
   return (
