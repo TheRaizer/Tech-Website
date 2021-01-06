@@ -1,9 +1,10 @@
 .image {
     position: absolute;
-    top: 28%;
+    /* these need to be different units */
+    top: 33%;
     left: 50%;
     /* Negative half of height. */
-    margin-left: -25vw;
+    margin-left: -25%;
     height: 75%;
     width:50%;
     border-width: 5px;

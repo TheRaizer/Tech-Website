@@ -1,22 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactRouterSetup from "./Components/ReactRouterSetup";
-import LoggedInContext from "./Contexts/LoggedInContext";
+import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
-import { store } from "./Actions/store";
+import { store, persistor } from "./Actions/store";
 import "./App.css";
 
 function App() {
-  const [loggedInInfo, setLoggedInInfo] = useState({
-    loggedIn: false,
-    user: { userId: "", userEmail: "", username: "", password: "" },
-  });
-  const loggedInValue = { loggedInInfo, setLoggedInInfo };
-
   return (
     <Provider store={store}>
-      <LoggedInContext.Provider value={loggedInValue}>
+      <PersistGate loading={null} persistor={persistor}>
         <ReactRouterSetup />
-      </LoggedInContext.Provider>
+      </PersistGate>
     </Provider>
   );
 }

@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import LoggedInContext from "../../Contexts/LoggedInContext";
-import "./Login.css";
 import * as actions from "../../Actions/UserReducerActions";
+import "./Login.css";
 
 function SignUp(props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,27 +14,10 @@ function SignUp(props) {
     password: "",
   });
   const [hasSubmitted, sethasSubmitted] = useState(false);
-  const { loggedInInfo, setLoggedInInfo } = useContext(LoggedInContext);
-
-  useEffect(() => {
-    setLoggedInInfo({
-      loggedIn: true,
-      user: {
-        ...loggedInInfo.user,
-        userEmail: props.fetchedUser.userEmail,
-        username: props.fetchedUser.username,
-      },
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.fetchedUser]);
 
   const submitUserInfo = () => {
     props.createUser(info, (createdUserId) => {
       props.fetchUser(createdUserId);
-      setLoggedInInfo({
-        ...loggedInInfo,
-        user: { ...loggedInInfo.user, userId: createdUserId },
-      });
     });
     sethasSubmitted(true);
   };
@@ -46,7 +28,7 @@ function SignUp(props) {
         <Link to="/">Return to Home Page</Link>
       </section>
     );
-  } else if (!hasSubmitted) {
+  } else {
     return (
       <section className="login-form">
         <h1>Sign Up</h1>
@@ -128,8 +110,7 @@ function SignUp(props) {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.UserReducer.users,
-  fetchedUser: state.UserReducer.fetchedUser,
+  currentUser: state.persistedUserReducer.currentUser,
 });
 
 const mapDispatchToProps = {

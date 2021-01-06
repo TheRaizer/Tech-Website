@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from "redux";
+import { persistStore } from "redux-persist";
 import { reducers } from "../ReduxStoreReducers"; //since we are not passing any file it will immediately look for index.js
 import thunk from "redux-thunk";
 
@@ -13,3 +14,5 @@ export const store = createStore(
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
+
+export const persistor = persistStore(store); //creates a persistor for the PersistorGate
