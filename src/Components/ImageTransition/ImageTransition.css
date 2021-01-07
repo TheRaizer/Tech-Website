@@ -1,7 +1,7 @@
 .image {
     position: absolute;
     /* these need to be different units */
-    top: 33%;
+    top: 300px;
     left: 50%;
     /* Negative half of height. */
     margin-left: -25%;
@@ -13,4 +13,5 @@
 
 .image-section {
     height: 90vh;
+    margin-bottom: 70px;
 }
