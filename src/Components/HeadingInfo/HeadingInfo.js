@@ -1,16 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import * as actions from "../../Actions/UserReducerActions";
 import "./HeadingInfo.css";
 
 function HeadingInfo(props) {
-  console.log(props.currentUser); //empties on reload
-  if (Object.keys(props.currentUser).length !== 0) {
+  if (props.username !== "") {
     return (
       <header className="header">
         <h1>Kronis</h1>
-        <h4>{props.currentUser.username}</h4>
+        <h4>{props.username}</h4>
       </header>
     );
   } else {
@@ -26,15 +24,7 @@ function HeadingInfo(props) {
   }
 }
 const mapStateToProps = (state) => ({
-  currentUser: state.persistedUserReducer.currentUser,
+  username: state.persistedUserReducer.username,
 });
 
-const mapDispatchToProps = {
-  fetchAllUsers: actions.fetchAllUsers,
-  fetchUser: actions.fetchUser,
-  createUser: actions.createUser,
-  deleteUser: actions.deleteUser,
-  updateUser: actions.updateUser,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(HeadingInfo);
+export default connect(mapStateToProps)(HeadingInfo);

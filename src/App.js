@@ -3,13 +3,16 @@ import ReactRouterSetup from "./Components/ReactRouterSetup";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { store, persistor } from "./Actions/store";
+import UserIdContextProvider from "./Contexts/UserIdContext";
 import "./App.css";
 
 function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ReactRouterSetup />
+        <UserIdContextProvider>
+          <ReactRouterSetup />
+        </UserIdContextProvider>
       </PersistGate>
     </Provider>
   );

@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
+    "hashids": "^2.2.8",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-persist": "^1.0.2",
@@ -16,6 +17,7 @@
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
+    "regex": "^0.1.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

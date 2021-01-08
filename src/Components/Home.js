@@ -15,8 +15,15 @@ function Home() {
       <ImageTransitionSection />
       <PartsChoices />
 
-      {/* Testing persistor purge and signing out of current user. persistor.purge() clears the persisted data in the store */}
-      <button onClick={() => persistor.purge()}>Flush User/Sign Out</button>
+      <button
+        onClick={() => {
+          /* Testing persistor.purge() to remove the held user username. persistor.purge() clears the persisted data in the store */
+          persistor.purge();
+          localStorage.removeItem("user_id"); // removes the user_id from the persisted state held in the UserIdContextProvider
+        }}
+      >
+        Flush User/Sign Out
+      </button>
     </section>
   );
 }

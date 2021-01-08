@@ -7,6 +7,8 @@ export const initialState = {
   noMatchingPassword: false,
   missingUsername: false,
   missingEmail: false,
+  invalidEmail: false,
+  emailInUse: false,
 };
 
 export const SubmissionErrors = (state, action) => {
@@ -44,7 +46,22 @@ export const SubmissionErrors = (state, action) => {
       return {
         ...state,
         missingEmail: action.payload,
+        invalidEmail: false,
       };
+    case ACTION_TYPES.INVALID_EMAIL:
+      return {
+        ...state,
+        invalidEmail: action.payload,
+        missingEmail: false,
+      };
+    case ACTION_TYPES.EMAIL_IN_USE:
+      return {
+        ...state,
+        emailInUse: action.payload,
+        missingEmail: false,
+        invalidEmail: false,
+      };
+
     default:
       console.error("no matching action types");
   }

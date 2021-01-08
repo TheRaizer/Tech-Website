@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import * as actions from "../../Actions/UserReducerActions";
@@ -12,22 +12,27 @@ import {
   usernameActions,
   emailActions,
 } from "../../Actions/SubmissionErrorsActions";
+import { UserIdContext } from "../../Contexts/UserIdContext";
 import "./Login.css";
+import Hashids from "hashids";
 
 function SignUp(props) {
   const [submissionErrors, dispatch] = useReducer(
     SubmissionErrors,
     initialState
   );
+
+  const [hasSubmitted, sethasSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [confirmedPassword, setConfirmedPassword] = useState("");
+
   const [info, setInfo] = useState({
     userEmail: "",
     username: "",
     password: "",
   });
-  const [hasSubmitted, sethasSubmitted] = useState(false);
+  const { setUserId } = useContext(UserIdContext); //sets a persistent username held in a context
 
   const submitUserInfo = () => {
     let passwordError = passwordErrorCheck();
@@ -44,32 +49,38 @@ function SignUp(props) {
     }
 
     passwordMatchActions.passwordIsMatching(dispatch);
-    console.log("post");
-
     props.createUser(info, (createdUserId) => {
-      props.fetchUser(createdUserId);
+      props.fetchUsername(createdUserId);
+      let hashids = new Hashids();
+      setUserId(hashids.encode(createdUserId));
     });
     sethasSubmitted(true);
   };
 
   const confirmedPasswordErrorCheck = () => {
+    let hasError = false;
     if (confirmedPassword !== info.password) {
+      // the confirmed password must be equal to the password
       passwordMatchActions.passwordIsNotMatching(dispatch);
       setConfirmedPassword("");
-
-      return true;
+      hasError = true;
+    } else {
+      passwordMatchActions.passwordIsMatching(dispatch);
     }
+    return hasError;
   };
   const passwordErrorCheck = () => {
     let hasError = false;
     if (info.password.length > 12) {
+      // the password must be <= 12 characters
       passwordActions.passwordToLong(dispatch);
       hasError = true;
     } else if (info.password.length < 5) {
+      // the password must be >= 5 characters
       passwordActions.passwordToShort(dispatch);
       hasError = true;
     } else {
-      passwordActions.passwordLengthIsFine(dispatch);
+      passwordActions.passwordLengthIsValid(dispatch);
     }
 
     return hasError;
@@ -77,27 +88,46 @@ function SignUp(props) {
   const userNameErrorCheck = () => {
     let hasError = false;
     if (info.username.length === 0) {
+      // there must be a username typed in
       usernameActions.missingUsername(dispatch);
       hasError = true;
     } else if (info.username.length > 15) {
+      // the username cannot be above 15 characters
       usernameActions.usernameToLong(dispatch);
       hasError = true;
     } else {
-      usernameActions.usernameIsFine(dispatch);
+      usernameActions.usernameIsValid(dispatch);
     }
 
     return hasError;
   };
   const emailErrorCheck = () => {
-    let hasError = false;
+    const re = new RegExp(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
     if (info.userEmail.length === 0) {
+      // there must be an email typed in
       emailActions.missingEmail(dispatch);
-      hasError = true;
-    } else {
-      emailActions.emailIsFine(dispatch);
+      return true;
+    } else if (!re.test(info.userEmail.toLowerCase())) {
+      // the email must have the proper format
+      emailActions.invalidEmail(dispatch);
+      return true;
     }
 
-    return hasError;
+    const exists = actions.isExistingUser(info.userEmail);
+    exists
+      .then((userExists) => {
+        if (userExists) {
+          // the email must not already exist as an account
+          emailActions.emailInUse(dispatch);
+          return true;
+        }
+      })
+      .catch((err) => console.log(err));
+
+    emailActions.emailIsValid(dispatch);
+    return false;
   };
 
   if (hasSubmitted) {
@@ -114,20 +144,27 @@ function SignUp(props) {
         <div>
           <h4>Enter Email: </h4>
           <p>{submissionErrors.missingEmail ? "email is missing" : ""}</p>
+          <p>{submissionErrors.invalidEmail ? "email is invalid" : ""}</p>
+          <p>
+            {submissionErrors.emailInUse
+              ? "email is already linked to an account"
+              : ""}
+          </p>
           <input
             type="email"
             onChange={(evt) =>
               setInfo((info) => ({ ...info, userEmail: evt.target.value }))
             }
             style={{
-              backgroundColor: submissionErrors.missingEmail
-                ? "rgba(255, 65, 65, 0.356)"
-                : "white",
+              backgroundColor:
+                submissionErrors.missingEmail || submissionErrors.invalidEmail
+                  ? "rgba(255, 65, 65, 0.356)"
+                  : "white",
             }}
           />
         </div>
         <div>
-          <h4>Enter Username (max 15): </h4>
+          <h4>Enter Username (maximum 15 characters): </h4>
           <p>{submissionErrors.longUsername ? "username is too long" : ""}</p>
           <p>{submissionErrors.missingUsername ? "username is missing" : ""}</p>
           <input
@@ -145,7 +182,7 @@ function SignUp(props) {
           />
         </div>
         <div>
-          <h4>Enter Password (min 5, max 12): </h4>
+          <h4>Enter Password (must be between 5-12 characters): </h4>
           <p>{submissionErrors.longPassword ? "password is to long" : ""}</p>
           <p>{submissionErrors.shortPassword ? "password is to short" : ""}</p>
           <input
@@ -209,15 +246,12 @@ function SignUp(props) {
 }
 
 const mapStateToProps = (state) => ({
-  currentUser: state.persistedUserReducer.currentUser,
+  username: state.persistedUserReducer.username,
 });
 
 const mapDispatchToProps = {
-  fetchAllUsers: actions.fetchAllUsers,
-  fetchUser: actions.fetchUser,
+  fetchUsername: actions.fetchUsername,
   createUser: actions.createUser,
-  deleteUser: actions.deleteUser,
-  updateUser: actions.updateUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

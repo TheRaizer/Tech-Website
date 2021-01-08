@@ -6,6 +6,29 @@ export const ACTION_TYPES = {
   DELETE: "DELETE_USER",
   FETCH_ALL: "FETCH_ALL_USERS",
   FETCH: "FETCH",
+  FETCH_USERNAME: "FETCH_USERNAME",
+  USER_EXISTS: "USER_EXISTS",
+};
+
+export const fetchUsername = (id) => (dispatch) => {
+  users()
+    .fetchUsernameById(id)
+    .then((response) => {
+      dispatch({
+        type: ACTION_TYPES.FETCH_USERNAME,
+        payload: response.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const isExistingUser = async (email) => {
+  try {
+    const response = await users().isExistingUser(email);
+    return response.data;
+  } catch (err) {
+    return console.log(err);
+  }
 };
 
 export const fetchAllUsers = () => (dispatch) => {

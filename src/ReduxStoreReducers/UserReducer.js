@@ -1,24 +1,18 @@
 import { ACTION_TYPES } from "../Actions/UserReducerActions";
 
 const initialState = {
-  currentUser: {},
+  username: "",
 };
 
 export function UserReducer(state = initialState, action) {
   switch (action.type) {
-    case ACTION_TYPES.CREATE:
-      let newUser = action.payload;
+    //we do not want to return anything on fetch as it will return the entire user including private info
+    case ACTION_TYPES.FETCH_USERNAME:
       return {
         ...state,
-        currentUser: newUser,
+        username: action.payload,
       };
     //no need to use any other ACTION_TYPES as we do not need to modify any of the state when using them. default case will run
-    case ACTION_TYPES.FETCH:
-      let user = action.payload;
-      return {
-        ...state,
-        currentUser: user,
-      };
     default:
       return state;
   }
