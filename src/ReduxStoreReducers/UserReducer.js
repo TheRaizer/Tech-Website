@@ -12,6 +12,11 @@ export function UserReducer(state = initialState, action) {
         ...state,
         username: action.payload,
       };
+    case ACTION_TYPES.FETCH_USER_WITH_CREDENTIALS:
+      return {
+        ...state,
+        username: action.payload,
+      };
     //no need to use any other ACTION_TYPES as we do not need to modify any of the state when using them. default case will run
     default:
       return state;

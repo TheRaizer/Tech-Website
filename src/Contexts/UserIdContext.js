@@ -4,8 +4,11 @@ import usePersistedState from "../CustomHooks/usePersistedState";
 export const UserIdContext = createContext();
 
 const UserIdContextProvider = ({ children }) => {
-  const [userId, setUserId] = usePersistedState("user_id", "");
-  const user = { userId, setUserId };
+  const [userInfo, setUserInfo] = usePersistedState("user_id", {
+    userId: "",
+    hasSignedIn: false,
+  });
+  const user = { userInfo, setUserInfo };
 
   return (
     <UserIdContext.Provider value={user}>{children}</UserIdContext.Provider>

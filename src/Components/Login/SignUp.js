@@ -22,7 +22,6 @@ function SignUp(props) {
     initialState
   );
 
-  const [hasSubmitted, sethasSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [confirmedPassword, setConfirmedPassword] = useState("");
@@ -32,7 +31,7 @@ function SignUp(props) {
     username: "",
     password: "",
   });
-  const { setUserId } = useContext(UserIdContext); //sets a persistent username held in a context
+  const { userInfo, setUserInfo } = useContext(UserIdContext); //sets a persistent username held in a context
 
   const submitUserInfo = () => {
     let passwordError = passwordErrorCheck();
@@ -52,9 +51,13 @@ function SignUp(props) {
     props.createUser(info, (createdUserId) => {
       props.fetchUsername(createdUserId);
       let hashids = new Hashids();
-      setUserId(hashids.encode(createdUserId));
+      setUserInfo({
+        ...userInfo,
+        userId: hashids.encode(createdUserId),
+        hasSignedIn: true,
+      });
+      setInfo({});
     });
-    sethasSubmitted(true);
   };
 
   const confirmedPasswordErrorCheck = () => {
@@ -75,7 +78,7 @@ function SignUp(props) {
       // the password must be <= 12 characters
       passwordActions.passwordToLong(dispatch);
       hasError = true;
-    } else if (info.password.length < 5) {
+    } else if (info.password.length < 8) {
       // the password must be >= 5 characters
       passwordActions.passwordToShort(dispatch);
       hasError = true;
@@ -130,7 +133,7 @@ function SignUp(props) {
     return false;
   };
 
-  if (hasSubmitted) {
+  if (userInfo.hasSignedIn) {
     return (
       <section className="login-form">
         <h1>You have Created an Account</h1>
@@ -157,7 +160,9 @@ function SignUp(props) {
             }
             style={{
               backgroundColor:
-                submissionErrors.missingEmail || submissionErrors.invalidEmail
+                submissionErrors.missingEmail ||
+                submissionErrors.invalidEmail ||
+                submissionErrors.emailInUse
                   ? "rgba(255, 65, 65, 0.356)"
                   : "white",
             }}
@@ -182,7 +187,7 @@ function SignUp(props) {
           />
         </div>
         <div>
-          <h4>Enter Password (must be between 5-12 characters): </h4>
+          <h4>Enter Password (must be between 8-12 characters): </h4>
           <p>{submissionErrors.longPassword ? "password is to long" : ""}</p>
           <p>{submissionErrors.shortPassword ? "password is to short" : ""}</p>
           <input

@@ -7,6 +7,7 @@ export const ACTION_TYPES = {
   FETCH_ALL: "FETCH_ALL_USERS",
   FETCH: "FETCH",
   FETCH_USERNAME: "FETCH_USERNAME",
+  FETCH_USER_WITH_CREDENTIALS: "FETCH_USER_WITH_CREDENTIALS",
   USER_EXISTS: "USER_EXISTS",
 };
 
@@ -23,12 +24,35 @@ export const fetchUsername = (id) => (dispatch) => {
 };
 
 export const isExistingUser = async (email) => {
+  // this is not kept in the store so it does not need a dispatch function
   try {
     const response = await users().isExistingUser(email);
     return response.data;
   } catch (err) {
     return console.log(err);
   }
+};
+
+export const fetchUserByEmailandPassword = (
+  email,
+  password,
+  onFailure,
+  onSuccesful
+) => (dispatch) => {
+  users()
+    .fetchUserByEmailandPassword(email, password)
+    .then((response) => {
+      const user = response.data;
+      dispatch({
+        type: ACTION_TYPES.FETCH_USER_WITH_CREDENTIALS,
+        payload: user.username,
+      });
+      onSuccesful();
+    })
+    .catch((err) => {
+      onFailure();
+      console.log(err);
+    });
 };
 
 export const fetchAllUsers = () => (dispatch) => {

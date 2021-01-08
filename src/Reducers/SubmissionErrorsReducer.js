@@ -47,12 +47,14 @@ export const SubmissionErrors = (state, action) => {
         ...state,
         missingEmail: action.payload,
         invalidEmail: false,
+        emailInUse: false,
       };
     case ACTION_TYPES.INVALID_EMAIL:
       return {
         ...state,
         invalidEmail: action.payload,
         missingEmail: false,
+        emailInUse: false,
       };
     case ACTION_TYPES.EMAIL_IN_USE:
       return {
@@ -66,5 +68,4 @@ export const SubmissionErrors = (state, action) => {
       console.error("no matching action types");
   }
 };
-
 export default SubmissionErrors;
