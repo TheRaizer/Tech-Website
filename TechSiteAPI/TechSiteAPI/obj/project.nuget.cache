@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vbmRTBR4CmmkopPluYg3v2zyhj5/pom6/WI5h7nva2pnyIJko/OMFd09sACawfbPmmfyFC//YcJNogg8+5dQMA==",
+  "dgSpecHash": "SkaQ1VYv4Ej8ethZ2zghmC2IfrnCQ5vfDWPAaIY4E98dzkxwn09mV9xWdxWf9tImYVDkCVgsxKNIdCtKhwuGVA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\source\\repos\\TechSiteAPI\\TechSiteAPI\\TechSiteAPI.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\WebDevProjects\\ComputerShop\\TechSiteAPI\\TechSiteAPI\\TechSiteAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
