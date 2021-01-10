@@ -13,7 +13,7 @@ import {
   emailActions,
 } from "../../Actions/SubmissionErrorsActions";
 import { UserIdContext } from "../../Contexts/UserIdContext";
-import "./Login.css";
+import "./login.css";
 import Hashids from "hashids";
 
 function SignUp(props) {

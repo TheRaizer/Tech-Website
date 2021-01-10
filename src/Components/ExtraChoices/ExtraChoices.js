@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./ExtraChoices.css";
+import "./extra-choices.css";
 
 function ExtraChoices() {
   return (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTransition, animated } from "react-spring";
-import "./ImageTransition.css";
+import "./image-transition.css";
 
 const productImages = [
   {

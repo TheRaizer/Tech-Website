@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSpring, animated } from "react-spring";
 import { Link } from "react-router-dom";
-import "./PartsChoices.css";
+import "./parts-choices.css";
 import { partsIcons } from "../PartsData";
 
 function PartsChoices() {
