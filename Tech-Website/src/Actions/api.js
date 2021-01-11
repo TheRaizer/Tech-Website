@@ -10,9 +10,11 @@ export function users(url = baseUrl + "Users/") {
     fetchUserByEmailandPassword: (email, password) =>
       axios.get(url + email + "&" + password + "/get"),
     isExistingUser: (email) => axios.get(url + email + "/checkexists"),
-    create: (newRecord) => axios.post(url + "postuser", newRecord),
-    update: (id, updatedRecord) => axios.put(url + id, updatedRecord),
-    delete: (id) => axios.delete(url + id),
+    createUser: (newRecord) => axios.post(url + "postuser", newRecord),
+    updateUser: (id, updatedRecord) => axios.put(url + id, updatedRecord),
+    deleteUser: (id) => axios.delete(url + id),
+
+    createOrder: (newRecord) => axios.post(url + "postorder", newRecord),
   };
 }
 

@@ -2,6 +2,7 @@ import users from "./api";
 
 export const ACTION_TYPES = {
   CREATE: "CREATE_USER",
+  CREATE_ORDER: "CREATE_ORDER",
   UPDATE: "UPDATE_USER",
   DELETE: "DELETE_USER",
   FETCH_ALL: "FETCH_ALL_USERS",
@@ -47,7 +48,7 @@ export const fetchUserByEmailandPassword = (
         type: ACTION_TYPES.FETCH_USER_WITH_CREDENTIALS,
         payload: user.username,
       });
-      onSuccesful();
+      onSuccesful(response.data.userId);
     })
     .catch((err) => {
       onFailure();
@@ -69,7 +70,7 @@ export const fetchAllUsers = () => (dispatch) => {
 
 export const createUser = (newUser, onSuccessful) => (dispatch) => {
   users()
-    .create(newUser)
+    .createUser(newUser)
     .then((response) => {
       dispatch({
         type: ACTION_TYPES.CREATE,
@@ -82,7 +83,7 @@ export const createUser = (newUser, onSuccessful) => (dispatch) => {
 
 export const updateUser = (id, updatedUser, onSuccessful) => (dispatch) => {
   users()
-    .update(id, updatedUser)
+    .updateUser(id, updatedUser)
     .then((response) => {
       dispatch({
         type: ACTION_TYPES.UPDATE,
@@ -95,7 +96,7 @@ export const updateUser = (id, updatedUser, onSuccessful) => (dispatch) => {
 
 export const deleteUser = (id, onSuccessful) => (dispatch) => {
   users()
-    .delete(id)
+    .deleteUser(id)
     .then(() => {
       dispatch({
         type: ACTION_TYPES.DELETE,
@@ -112,6 +113,18 @@ export const fetchUser = (id) => (dispatch) => {
     .then((response) => {
       dispatch({
         type: ACTION_TYPES.FETCH,
+        payload: response.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const createOrder = (newOrder) => (dispatch) => {
+  users()
+    .createOrder(newOrder)
+    .then((response) => {
+      dispatch({
+        type: ACTION_TYPES.CREATE_ORDER,
         payload: response.data,
       });
     })

@@ -17,9 +17,14 @@ function SignIn(props) {
       credentials.password,
       () => {
         setIsValid(false);
+        setCredentials({ email: "", password: "" });
       },
-      () => {
-        setUserInfo({ ...userInfo, hasSignedIn: true });
+      (userId) => {
+        setUserInfo({
+          userInfo: { ...userInfo, userId: userId },
+          hasSignedIn: true,
+        });
+        setCredentials({ email: "", password: "" });
       }
     );
   };

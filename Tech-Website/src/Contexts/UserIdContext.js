@@ -5,7 +5,7 @@ export const UserIdContext = createContext();
 
 const UserIdContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = usePersistedState("user_id", {
-    userId: "",
+    userId: null,
     hasSignedIn: false,
   });
   const user = { userInfo, setUserInfo };
