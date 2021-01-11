@@ -53,6 +53,19 @@ namespace TechSiteAPI.Controllers
 
             return user;
         }
+
+        //GET: api/Users/{id}
+        [HttpGet("{orderId}/getorder")]
+        public async Task<ActionResult<Order>> GetOrder(int orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return order;
+        }
         //GET: api/Users/{id}/username/
         [HttpGet("{id}/username/")]
         public async Task<ActionResult<string>> GetUserUsername(int id)
@@ -133,11 +146,11 @@ namespace TechSiteAPI.Controllers
         }
         // POST: api/Users/postorder
         [HttpPost("postorder")]
-        public async Task<ActionResult<User>> PostOrder(Order Order)
+        public async Task<ActionResult<User>> PostOrder(Order order)
         {
-            _context.Orders.Add(Order);
+            _context.Orders.Add(order);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("GetUser", new { id = Order.OrderId }, User);
+            return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
         }
 
         // DELETE: api/Users/{id}
