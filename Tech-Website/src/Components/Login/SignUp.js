@@ -14,7 +14,6 @@ import {
 } from "../../Actions/SubmissionErrorsActions";
 import { UserIdContext } from "../../Contexts/UserIdContext";
 import "./login.css";
-import Hashids from "hashids";
 
 function SignUp(props) {
   const [submissionErrors, dispatch] = useReducer(
@@ -50,10 +49,9 @@ function SignUp(props) {
     passwordMatchActions.passwordIsMatching(dispatch);
     props.createUser(info, (createdUserId) => {
       props.fetchUsername(createdUserId);
-      let hashids = new Hashids();
       setUserInfo({
         ...userInfo,
-        userId: hashids.encode(createdUserId),
+        userId: createdUserId,
         hasSignedIn: true,
       });
       setInfo({});

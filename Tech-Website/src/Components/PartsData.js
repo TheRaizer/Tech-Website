@@ -13,6 +13,33 @@ const partsIcons = [
   { id: 2, src: GraphicsCardIcon },
   { id: 3, src: RAMIcon },
 ];
+
+const partsImages = [
+  {
+    id: 1,
+    imgs: {
+      EXPENSIVE: { orderId: 22135, src: "" },
+      BUDGET: { orderId: 33921, src: "" },
+      BEST: { orderId: 99343, src: "" },
+    },
+  },
+  {
+    id: 2,
+    imgs: {
+      EXPENSIVE: { orderId: 52524, src: "" },
+      BUDGET: { orderId: 11825, src: "" },
+      BEST: { orderId: 87292, src: "" },
+    },
+  },
+  {
+    id: 3,
+    imgs: {
+      EXPENSIVE: { orderId: 12863, src: "" },
+      BUDGET: { orderId: 14785, src: "" },
+      BEST: { orderId: 19852, src: "" },
+    },
+  },
+];
 const partsDescriptions = [
   {
     id: 1,
@@ -79,4 +106,4 @@ const partsDescriptions = [
   },
 ];
 
-export { parts, partsIcons, partsDescriptions };
+export { parts, partsIcons, partsDescriptions, partsImages };
