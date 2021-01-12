@@ -30,6 +30,7 @@ function SignUp(props) {
     username: "",
     password: "",
   });
+
   const { userInfo, setUserInfo } = useContext(UserIdContext); //sets a persistent username held in a context
 
   const submitUserInfo = () => {

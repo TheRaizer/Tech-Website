@@ -21,5 +21,7 @@ namespace TechSiteAPI.Models
 
         [Required]
         public DateTime OrderDate { get; set; }
+        [Required]
+        public int Progress { get; set; } // This integer represents the progress of the order. 0-processing, 1-shipping, 2-arrived
     }
 }
