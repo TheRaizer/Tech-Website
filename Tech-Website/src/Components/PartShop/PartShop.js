@@ -13,6 +13,8 @@ function PartShop() {
   const partInfos = partsInfos.find((x) => x.id === id).imgs;
 
   const AddToCart = (partInfos, itemType) => {
+    //when order hasnt been created create order then add product.
+    // to do this we can check the database for any pending submission orders, if there is one we will add this product to that order. if there isn't we will add a pending order.
     //add this product to the order and keep orderStatus as "pending-submission".
   };
 
@@ -25,7 +27,7 @@ function PartShop() {
       </section>
       <h2>The Expensive</h2>
       <img
-        key={partInfos["EXPENSIVE"].itemId}
+        key={partInfos["EXPENSIVE"].prodNum}
         iconSrc={partInfos["EXPENSIVE"].src}
         alt="Unavailable"
       />
@@ -33,7 +35,7 @@ function PartShop() {
       <h5>{partDescs.expensive}</h5>
       <h2>The Budget</h2>
       <img
-        key={partInfos["BUDGET"].itemId}
+        key={partInfos["BUDGET"].prodNum}
         iconSrc={partInfos["BUDGET"].src}
         alt="Unavailable"
       />
@@ -41,7 +43,7 @@ function PartShop() {
       <h5>{partDescs.budget}</h5>
       <h2>The Best</h2>
       <img
-        key={partInfos["BEST"].itemId}
+        key={partInfos["BEST"].prodNum}
         iconSrc={partInfos["BEST"].src}
         alt="Unavailable"
       />

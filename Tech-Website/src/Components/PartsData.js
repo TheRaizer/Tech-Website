@@ -19,19 +19,19 @@ const partsInfos = [
     id: 1,
     imgs: {
       EXPENSIVE: {
-        itemId: 22135,
+        prodNum: 22135,
         src: "",
         price: 2500.88,
         name: "Xeon W-3175X",
       },
       BUDGET: {
-        itemId: 33921,
+        prodNum: 33921,
         src: "",
         price: 299.99,
         name: "Ryzen 3 3300X",
       },
       BEST: {
-        itemId: 99343,
+        prodNum: 99343,
         src: "",
         price: 600,
         name: "Ryzen 5 5600X",
@@ -42,19 +42,19 @@ const partsInfos = [
     id: 2,
     imgs: {
       EXPENSIVE: {
-        itemId: 52524,
+        prodNum: 52524,
         src: "",
         price: 6340.22,
         name: "GeForce RTX 2080 Super",
       },
       BUDGET: {
-        itemId: 11825,
+        prodNum: 11825,
         src: "",
         price: 450,
         name: "Nvidia GTX 1650",
       },
       BEST: {
-        itemId: 87292,
+        prodNum: 87292,
         src: "",
         price: 1090.8,
         name: "Radeon RX 6800 XT",
@@ -65,19 +65,19 @@ const partsInfos = [
     id: 3,
     imgs: {
       EXPENSIVE: {
-        itemId: 12863,
+        prodNum: 12863,
         src: "",
         price: 1088.64,
         name: "VENGEANCE LPX",
       },
       BUDGET: {
-        itemId: 14785,
+        prodNum: 14785,
         src: "",
         price: 64.12,
         name: "Kingston HyperX Fury",
       },
       BEST: {
-        itemId: 19852,
+        prodNum: 19852,
         src: "",
         price: 98.89,
         name: "Xtreem ARGB",

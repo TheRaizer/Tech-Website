@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,15 +14,22 @@ namespace TechSiteAPI.Models
         public int OrderId { get; set; }
 
         [Required]
-        public int UserId { get; set; }
-
-        [Required]
-        [Column(TypeName = "nvarchar(200)")]
-        public string ProductName { get; set; }
+        public int UserId { get; set; }//foreign key creating a relationship to the Users table
 
         [Required]
         public DateTime OrderDate { get; set; }
+
         [Required]
-        public int Progress { get; set; } // This integer represents the progress of the order. 0-processing, 1-shipping, 2-arrived
+        [Column(TypeName = "nvarchar(200)")]
+        public string Status { get; set; }
+
+        [Required]
+        [Column(TypeName = "nvarchar(200)")]
+        public string DeliveryAddress { get; set; }
+
+        [Required]
+        public int OrderNumber { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
