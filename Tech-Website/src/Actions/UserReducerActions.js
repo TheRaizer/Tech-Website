@@ -1,4 +1,4 @@
-import users from "./api";
+import { users } from "./api";
 
 export const ACTION_TYPES = {
   CREATE: "CREATE_USER",
@@ -114,30 +114,6 @@ export const fetchUser = (id) => (dispatch) => {
     .then((response) => {
       dispatch({
         type: ACTION_TYPES.FETCH,
-        payload: response.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
-export const createOrder = (newOrder) => (dispatch) => {
-  users()
-    .createOrder(newOrder)
-    .then((response) => {
-      dispatch({
-        type: ACTION_TYPES.CREATE_ORDER,
-        payload: response.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
-export const fetchUserOrders = (userId) => (dispatch) => {
-  users()
-    .fetchUserOrders(userId)
-    .then((response) => {
-      dispatch({
-        type: ACTION_TYPES.FETCH_USER_ORDERS,
         payload: response.data,
       });
     })

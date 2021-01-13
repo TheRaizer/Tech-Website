@@ -87,23 +87,6 @@ namespace TechSiteAPI.Controllers
             return await _context.Users.AnyAsync(x => x.UserEmail == email);
         }
 
-        //GET: api/Users/{id}/orders"
-        [HttpGet("{id}/orders")]
-        public async Task<ActionResult<IEnumerable<Order>>> GetUserOrders(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return BadRequest();
-            }
-            var orders = user.Orders.ToList();
-            if(orders == null)
-            {
-                return NotFound();
-            }
-            return orders;
-        }
-
         // PUT: api/Users/{id}
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -144,17 +127,7 @@ namespace TechSiteAPI.Controllers
 
             return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
-        // POST: api/Users/postorder
-        [HttpPost("postorder")]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
-        {
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-            /*this calls GetOrder() to get the order with the given orderId as the order.orderId. The new {orderId}
-             * must be named exactly as the parameter in the GetOrder() function called by the "GetOrder" string.
-             */
-            return CreatedAtAction("GetOrder", new { orderId = order.OrderId }, order);
-        }
+
 
         // DELETE: api/Users/{id}
         [HttpDelete("{id}")]

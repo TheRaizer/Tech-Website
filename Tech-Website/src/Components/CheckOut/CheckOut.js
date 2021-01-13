@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { connect } from "react-redux";
-import * as actions from "../../Actions/UserReducerActions";
+import * as actions from "../../Actions/OrderReducerActions";
 import { UserIdContext } from "../../Contexts/UserIdContext";
 
 function OrderPage(props) {
@@ -13,6 +13,7 @@ function OrderPage(props) {
     }
 
     let order = {
+      // this will change in the future
       userId: userInfo.userId,
       productName: "test_name in OrderPage.js",
       orderDate: new Date(),
@@ -23,8 +24,9 @@ function OrderPage(props) {
   };
   return (
     <div>
+      <h1>Check Out</h1>
       <button type="submit" onClick={SubmitOrder}>
-        Order
+        Submit Order
       </button>
     </div>
   );

@@ -1,27 +1,15 @@
 import { ACTION_TYPES } from "../Actions/UserReducerActions";
 
 const initialState = {
-  username: "",
   orderIds: [], //this can be changed to orderNumber
 };
 
-export function UserReducer(state = initialState, action) {
+export function OrderReducer(state = initialState, action) {
   switch (action.type) {
-    //we do not want to return anything on fetch as it will return the entire user including private info
-    case ACTION_TYPES.FETCH_USERNAME:
-      return {
-        ...state,
-        username: action.payload,
-      };
-    case ACTION_TYPES.FETCH_USER_WITH_CREDENTIALS:
-      return {
-        ...state,
-        username: action.payload,
-      };
     case ACTION_TYPES.CREATE_ORDER:
       return {
         ...state,
-        orders: [...state.orders, action.payload.orderId],
+        orderIds: [...state.orderIds, action.payload.orderId],
       };
     case ACTION_TYPES.FETCH_USER_ORDERS:
       const orders = action.payload;
@@ -37,4 +25,4 @@ export function UserReducer(state = initialState, action) {
   }
 }
 
-export default UserReducer;
+export default OrderReducer;

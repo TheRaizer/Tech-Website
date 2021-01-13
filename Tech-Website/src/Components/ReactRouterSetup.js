@@ -5,8 +5,9 @@ import Shop from "./Shop";
 import PartShop from "./PartShop/PartShop";
 import SignUp from "./Login/SignUp";
 import SignIn from "./Login/SignIn";
-import OrderPage from "./OrderPage/OrderPage";
+import CheckOut from "./CheckOut/CheckOut";
 import UserOrders from "./UserOrders/UserOrders";
+import Cart from "./CartPage/Cart";
 
 function ReactRouterSetup() {
   return (
@@ -25,11 +26,16 @@ function ReactRouterSetup() {
         <Route path="/sign-up">
           <SignUp />
         </Route>
+        <Route path="/cart">
+          <Cart />
+        </Route>
         <Route path="/orders">
           <UserOrders />
         </Route>
+        <Route path="/checkout">
+          <CheckOut />
+        </Route>
         <Route path="/part/:stringid" children={<PartShop />}></Route>
-        <Route path="/order/:stringOrderId" children={<OrderPage />}></Route>
         {/* The * path means it will run on any path */}
         <Route
           path="*"

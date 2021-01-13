@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import { UserIdContext } from "../../Contexts/UserIdContext";
-import * as actions from "../../Actions/UserReducerActions";
+import * as actions from "../../Actions/OrderReducerActions";
 
 function UserOrders(props) {
   const { userInfo } = useContext(UserIdContext);
@@ -9,9 +9,16 @@ function UserOrders(props) {
     props.fetchOrders(userInfo.userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return props.orders.map((order) => {
-    return <Order key={order.orderId} orderId={order.orderId} />;
-  });
+
+  if (props.orderIds == null) {
+    return <h1>No Orders</h1>;
+  } else if (props.orderIds.length <= 0) {
+    return <h1>No Orders</h1>;
+  } else {
+    return props.orderIds.map((orderId) => {
+      return <Order key={orderId} orderId={orderId} />;
+    });
+  }
 }
 
 const Order = (props) => {
@@ -19,7 +26,7 @@ const Order = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  orders: state.persistedUserReducer.orders,
+  orderIds: state.persistedUserReducer.orders,
 });
 
 const mapDispatchToProps = {

@@ -13,10 +13,12 @@ export function users(url = baseUrl + "Users/") {
     createUser: (newRecord) => axios.post(url + "postuser", newRecord),
     updateUser: (id, updatedRecord) => axios.put(url + id, updatedRecord),
     deleteUser: (id) => axios.delete(url + id),
+  };
+}
 
+export function orders(url = baseUrl + "Orders/") {
+  return {
     createOrder: (newRecord) => axios.post(url + "postorder", newRecord),
     fetchUserOrders: (id) => axios.get(url + id + "/orders"),
   };
 }
-
-export default users;

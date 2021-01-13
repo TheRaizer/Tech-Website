@@ -14,32 +14,78 @@ const partsIcons = [
   { id: 3, src: RAMIcon },
 ];
 
-const partsImages = [
+const partsInfos = [
   {
     id: 1,
     imgs: {
-      EXPENSIVE: { itemId: 22135, src: "" },
-      BUDGET: { itemId: 33921, src: "" },
-      BEST: { itemId: 99343, src: "" },
+      EXPENSIVE: {
+        itemId: 22135,
+        src: "",
+        price: 2500.88,
+        name: "Xeon W-3175X",
+      },
+      BUDGET: {
+        itemId: 33921,
+        src: "",
+        price: 299.99,
+        name: "Ryzen 3 3300X",
+      },
+      BEST: {
+        itemId: 99343,
+        src: "",
+        price: 600,
+        name: "Ryzen 5 5600X",
+      },
     },
   },
   {
     id: 2,
     imgs: {
-      EXPENSIVE: { itemId: 52524, src: "" },
-      BUDGET: { itemId: 11825, src: "" },
-      BEST: { itemId: 87292, src: "" },
+      EXPENSIVE: {
+        itemId: 52524,
+        src: "",
+        price: 6340.22,
+        name: "GeForce RTX 2080 Super",
+      },
+      BUDGET: {
+        itemId: 11825,
+        src: "",
+        price: 450,
+        name: "Nvidia GTX 1650",
+      },
+      BEST: {
+        itemId: 87292,
+        src: "",
+        price: 1090.8,
+        name: "Radeon RX 6800 XT",
+      },
     },
   },
   {
     id: 3,
     imgs: {
-      EXPENSIVE: { itemId: 12863, src: "" },
-      BUDGET: { itemId: 14785, src: "" },
-      BEST: { itemId: 19852, src: "" },
+      EXPENSIVE: {
+        itemId: 12863,
+        src: "",
+        price: 1088.64,
+        name: "VENGEANCE LPX",
+      },
+      BUDGET: {
+        itemId: 14785,
+        src: "",
+        price: 64.12,
+        name: "Kingston HyperX Fury",
+      },
+      BEST: {
+        itemId: 19852,
+        src: "",
+        price: 98.89,
+        name: "Xtreem ARGB",
+      },
     },
   },
 ];
+
 const partsDescriptions = [
   {
     id: 1,
@@ -98,12 +144,11 @@ const partsDescriptions = [
         "only has a handful of DDR4-3600 C14 memory kits at the 16GB (2x8GB) capacity. And with a price tag of $169.99, the Xtreem ARGB is the least expensive of " +
         "them all. The only gripe we have with is with its availability. Newegg is currently the only retailer that lists the memory kit, so it could be a challenge to find.",
       budget:
-        "Intel’s H370 and B360 chipsets instruct its Core i5 (and above) processors to lock out any memory settings above DDR4-2666, which is particularly unfortunate " +
-        "in a market that’s moved way past that setting. DDR4-3200 is now mainstream within the enthusiast PC market, and is often treated as such by the memory sellers " +
-        "that cater to enthusiasts and gamers. Thus, the best way to get a top-performing brand new DDR4-2666 kit would be to dial the way-back machine to 2016 and get the " +
-        "high-performing kit from that time. Barring that, Corsair has a workaround.",
+        "DDR4 RAM might be the fastest and hottest memory on the market now, but more than a few PCs aren’t designed with the right slot for it. Fear not, though, with DDR3 " +
+        "RAM going on its way out, you’re bound to find even more amazing deals on it, like this set of Kingston HyperX Fury memory. Like the Corsair kit above, Kingston makes " +
+        "solidly reliable RAM and they also feature low-profile designs to work with most PC builds.",
     },
   },
 ];
 
-export { parts, partsIcons, partsDescriptions, partsImages };
+export { parts, partsIcons, partsDescriptions, partsInfos };

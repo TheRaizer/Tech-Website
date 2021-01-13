@@ -11,7 +11,8 @@ function HeadingInfo(props) {
         <h1 className={styles.heading}>Kronis</h1>
         <h4>{props.username}</h4>
         <section className="login-options">
-          <Link to="/orders">My Orders</Link>
+          <Link to="/cart">Cart</Link>
+          <Link to="/orders">Order Statuses</Link>
         </section>
       </header>
     );

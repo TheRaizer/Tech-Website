@@ -71,7 +71,6 @@ C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\bin\Debug\net
 C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\obj\Debug\netcoreapp3.1\TechSiteAPI.csprojAssemblyReference.cache
 C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\obj\Debug\netcoreapp3.1\TechSiteAPI.AssemblyInfoInputs.cache
 C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\obj\Debug\netcoreapp3.1\TechSiteAPI.AssemblyInfo.cs
 C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\obj\Debug\netcoreapp3.1\TechSiteAPI.csproj.CoreCompileInputs.cache
