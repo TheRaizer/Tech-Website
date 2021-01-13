@@ -15,6 +15,7 @@ export function users(url = baseUrl + "Users/") {
     deleteUser: (id) => axios.delete(url + id),
 
     createOrder: (newRecord) => axios.post(url + "postorder", newRecord),
+    fetchUserOrders: (id) => axios.get(url + id + "/orders"),
   };
 }
 

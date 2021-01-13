@@ -6,6 +6,7 @@ import PartShop from "./PartShop/PartShop";
 import SignUp from "./Login/SignUp";
 import SignIn from "./Login/SignIn";
 import OrderPage from "./OrderPage/OrderPage";
+import UserOrders from "./UserOrders/UserOrders";
 
 function ReactRouterSetup() {
   return (
@@ -23,6 +24,9 @@ function ReactRouterSetup() {
         </Route>
         <Route path="/sign-up">
           <SignUp />
+        </Route>
+        <Route path="/orders">
+          <UserOrders />
         </Route>
         <Route path="/part/:stringid" children={<PartShop />}></Route>
         <Route path="/order/:stringOrderId" children={<OrderPage />}></Route>

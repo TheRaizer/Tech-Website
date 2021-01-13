@@ -22,23 +22,23 @@ function PartShop() {
       </section>
       <h2>The Expensive</h2>
       <ClickableImage
-        key={partImgs["EXPENSIVE"].orderId}
+        key={partImgs["EXPENSIVE"].itemId}
         iconSrc={partImgs["EXPENSIVE"].src}
-        link={"/order/" + partImgs["EXPENSIVE"].orderId}
+        link={"/order/" + partImgs["EXPENSIVE"].itemId}
       />
       <h5>{partDescs.expensive}</h5>
       <h2>The Budget</h2>
       <ClickableImage
-        key={partImgs["BUDGET"].orderId}
+        key={partImgs["BUDGET"].itemId}
         iconSrc={partImgs["BUDGET"].src}
-        link={"/order/" + partImgs["BUDGET"].orderId}
+        link={"/order/" + partImgs["BUDGET"].itemId}
       />
       <h5>{partDescs.budget}</h5>
       <h2>The Best</h2>
       <ClickableImage
-        key={partImgs["BEST"].orderId}
+        key={partImgs["BEST"].itemId}
         iconSrc={partImgs["BEST"].src}
-        link={"/order/" + partImgs["BEST"].orderId}
+        link={"/order/" + partImgs["BEST"].itemId}
       />
       <h5>{partDescs.best}</h5>
     </div>

@@ -16,6 +16,7 @@ function OrderPage(props) {
       userId: userInfo.userId,
       productName: "test_name in OrderPage.js",
       orderDate: new Date(),
+      progress: 0,
     };
 
     props.createOrder(order);

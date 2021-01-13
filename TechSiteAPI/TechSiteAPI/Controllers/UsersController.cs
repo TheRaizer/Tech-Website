@@ -96,7 +96,7 @@ namespace TechSiteAPI.Controllers
             {
                 return BadRequest();
             }
-            var orders = user.Orders.ToList();//ORDERS IS NULL BUG NAVIGATION PROPERTY IN USERS USING USERID FOREIGN KEY IS A NULL ICOLLECTION
+            var orders = user.Orders.ToList();
             if(orders == null)
             {
                 return NotFound();
@@ -146,11 +146,14 @@ namespace TechSiteAPI.Controllers
         }
         // POST: api/Users/postorder
         [HttpPost("postorder")]
-        public async Task<ActionResult<User>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder(Order order)
         {
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
+            /*this calls GetOrder() to get the order with the given orderId as the order.orderId. The new {orderId}
+             * must be named exactly as the parameter in the GetOrder() function called by the "GetOrder" string.
+             */
+            return CreatedAtAction("GetOrder", new { orderId = order.OrderId }, order);
         }
 
         // DELETE: api/Users/{id}

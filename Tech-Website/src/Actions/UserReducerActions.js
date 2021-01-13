@@ -6,6 +6,7 @@ export const ACTION_TYPES = {
   UPDATE: "UPDATE_USER",
   DELETE: "DELETE_USER",
   FETCH_ALL: "FETCH_ALL_USERS",
+  FETCH_USER_ORDERS: "FETCH_USER_ORDERS",
   FETCH: "FETCH",
   FETCH_USERNAME: "FETCH_USERNAME",
   FETCH_USER_WITH_CREDENTIALS: "FETCH_USER_WITH_CREDENTIALS",
@@ -125,6 +126,18 @@ export const createOrder = (newOrder) => (dispatch) => {
     .then((response) => {
       dispatch({
         type: ACTION_TYPES.CREATE_ORDER,
+        payload: response.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const fetchUserOrders = (userId) => (dispatch) => {
+  users()
+    .fetchUserOrders(userId)
+    .then((response) => {
+      dispatch({
+        type: ACTION_TYPES.FETCH_USER_ORDERS,
         payload: response.data,
       });
     })

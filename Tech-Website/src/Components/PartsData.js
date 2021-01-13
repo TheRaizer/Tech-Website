@@ -18,25 +18,25 @@ const partsImages = [
   {
     id: 1,
     imgs: {
-      EXPENSIVE: { orderId: 22135, src: "" },
-      BUDGET: { orderId: 33921, src: "" },
-      BEST: { orderId: 99343, src: "" },
+      EXPENSIVE: { itemId: 22135, src: "" },
+      BUDGET: { itemId: 33921, src: "" },
+      BEST: { itemId: 99343, src: "" },
     },
   },
   {
     id: 2,
     imgs: {
-      EXPENSIVE: { orderId: 52524, src: "" },
-      BUDGET: { orderId: 11825, src: "" },
-      BEST: { orderId: 87292, src: "" },
+      EXPENSIVE: { itemId: 52524, src: "" },
+      BUDGET: { itemId: 11825, src: "" },
+      BEST: { itemId: 87292, src: "" },
     },
   },
   {
     id: 3,
     imgs: {
-      EXPENSIVE: { orderId: 12863, src: "" },
-      BUDGET: { orderId: 14785, src: "" },
-      BEST: { orderId: 19852, src: "" },
+      EXPENSIVE: { itemId: 12863, src: "" },
+      BUDGET: { itemId: 14785, src: "" },
+      BEST: { itemId: 19852, src: "" },
     },
   },
 ];
