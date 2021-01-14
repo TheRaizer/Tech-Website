@@ -83,4 +83,3 @@ C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\obj\Debug\net
 C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\obj\Debug\netcoreapp3.1\TechSiteAPI.dll
 C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\obj\Debug\netcoreapp3.1\TechSiteAPI.pdb
 C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\obj\Debug\netcoreapp3.1\TechSiteAPI.genruntimeconfig.cache
-C:\Users\Admin\WebDevProjects\ComputerShop\TechSiteAPI\TechSiteAPI\obj\Debug\netcoreapp3.1\TechSiteAPI.csprojAssemblyReference.cache

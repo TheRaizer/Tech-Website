@@ -11,24 +11,25 @@ namespace TechSiteAPI.Models
         [DatabaseGenerated(DatabaseGeneratedOption
         .Identity)]
         [Required]
-        public int OrderId { get; set; }
+        public int ORD_ID { get; set; }
 
         [Required]
-        public int UserId { get; set; }//foreign key creating a relationship to the Users table
+        public int USER_ID { get; set; }//foreign key creating a relationship to the Users table
 
         [Required]
-        public DateTime OrderDate { get; set; }
-
-        [Required]
-        [Column(TypeName = "nvarchar(200)")]
-        public string Status { get; set; }
+        public DateTime ORD_DATE { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(200)")]
-        public string DeliveryAddress { get; set; }
+        public string STATUS_CD { get; set; }
 
         [Required]
-        public int OrderNumber { get; set; }
+        [Column(TypeName = "nvarchar(200)")]
+        public string DLIV_ADRR { get; set; }
+
+        [Required]
+        [Column(TypeName = "nvarchar(36)")]
+        public string ORD_UUID { get; set; }
         
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
     }

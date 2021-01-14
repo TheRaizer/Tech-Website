@@ -12,16 +12,16 @@ namespace TechSiteAPI.Models
         [DatabaseGenerated(DatabaseGeneratedOption
         .Identity)]
         [Required]
-        public int UserId { get; set; }
+        public int USER_ID { get; set; }
 
         [Column(TypeName = "nvarchar(320)")]
-        public string UserEmail { get; set; }
+        public string USER_EMAIL { get; set; }
 
         [Column(TypeName = "nvarchar(15)")]
-        public string Username { get; set; }
+        public string USERNAME { get; set; }
 
         [Column(TypeName = "nvarchar(12)")]
-        public string Password { get; set; }
+        public string PASSWORD { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
     }

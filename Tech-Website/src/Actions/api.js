@@ -20,6 +20,14 @@ export function orders(url = baseUrl + "Orders/") {
   return {
     createOrder: (newRecord) => axios.post(url + "post-order", newRecord),
     fetchUserOrders: (id) => axios.get(url + id + "/orders"),
+    getPendingOrder: () => axios.get(url + "get-pending-order"),
+  };
+}
+
+export function orderProducts(url = baseUrl + "OrderProducts/") {
+  return {
+    createOrderProduct: (newOrderProduct) =>
+      axios.post(url + "post-orderproduct", newOrderProduct),
   };
 }
 

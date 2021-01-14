@@ -5,7 +5,7 @@ export const ACTION_TYPES = {
   FETCH_USER_ORDERS: "FETCH_USER_ORDERS",
 };
 
-export const createOrder = (newOrder) => (dispatch) => {
+export const createOrder = (newOrder, addProductOnCreate) => (dispatch) => {
   orders()
     .createOrder(newOrder)
     .then((response) => {
@@ -13,6 +13,7 @@ export const createOrder = (newOrder) => (dispatch) => {
         type: ACTION_TYPES.CREATE_ORDER,
         payload: response.data,
       });
+      addProductOnCreate(response.data.orderId);
     })
     .catch((err) => console.log(err));
 };

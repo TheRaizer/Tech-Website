@@ -1,25 +1,25 @@
 import { ACTION_TYPES } from "../Actions/UserReducerActions";
 
 const initialState = {
-  orderNumbers: [],
+  orderUUIDs: [],
 };
 
 export function OrderReducer(state = initialState, action) {
   switch (action.type) {
     case ACTION_TYPES.CREATE_ORDER:
-      console.log("order number created ", action.payload.orderNumber);
+      console.log("order number created ", action.payload.orderUUID);
       return {
         ...state,
-        orderNumbers: [...state.orderNumbers, action.payload.orderNumber],
+        orderUUIDs: [...state.orderUUIDs, action.payload.orderUUID],
       };
     case ACTION_TYPES.FETCH_USER_ORDERS:
       const orders = action.payload;
-      let orderNumbers = [];
-      orders.forEach((x) => orderNumbers.push(x.orderNumber));
-      console.log("order numbers fetched ", orderNumbers);
+      let orderUUIDs = [];
+      orders.forEach((x) => orderUUIDs.push(x.orderUUID));
+      console.log("order numbers fetched ", orderUUIDs);
       return {
         ...state,
-        orderNumbers: orderNumbers,
+        orderNumbers: orderUUIDs,
       };
     //no need to use any other ACTION_TYPES as we do not need to modify any of the state when using them. default case will run
     default:

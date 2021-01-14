@@ -13,24 +13,25 @@ namespace TechSiteAPI.Models
         [DatabaseGenerated(DatabaseGeneratedOption
         .Identity)]
         [Required]
-        public int OrderProductId { get; set; }
+        public int ORD_PRD_ID { get; set; }
 
         [Required]
-        public int ProductId { get; set; }//foreign key creating a relationship to the Products table
+        public int PROD_ID { get; set; }//foreign key creating a relationship to the Products table
 
         [Required]
-        public int OrderId { get; set; }//foreign key creating a relationship to the Orders table
+        public int ORD_ID { get; set; }//foreign key creating a relationship to the Orders table
 
         [Required]
-        public float PaidPrice { get; set; }
+        public float PAID_PRC { get; set; }
 
         [Required]
-        public float PaidProductName { get; set; }
+        [Column(TypeName = "nvarchar(1000)")]
+        public string PAID_PROD_NM { get; set; }
 
-        [ForeignKey("OrderId")]
+        [ForeignKey("ORD_ID")]
         public virtual Order Order { get; set; }
 
-        [ForeignKey("ProductId")]
+        [ForeignKey("PROD_ID")]
         public virtual Product Product { get; set; }
     }
 }

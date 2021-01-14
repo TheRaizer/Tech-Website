@@ -19,13 +19,20 @@ namespace TechSiteAPI.Controllers
             _context = context;
         }
 
-        //GET: api/Products/getByCategory"
+        //GET: api/Products
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        {
+            return await _context.PRODS.ToListAsync();
+        }
+
+        //GET: api/Products/get-by-category"
         [HttpGet("{productCategory}/get-by-category")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string productCategory)
         {
-            var products = await _context.Products.ToListAsync();
+            var products = await _context.PRODS.ToListAsync();
             List<Product> matchingProducts = new List<Product>();
-            matchingProducts = products.FindAll(x => x.ProductCategory == productCategory);
+            matchingProducts = products.FindAll(x => x.PROD_CTGRY_CD == productCategory);
 
             if (matchingProducts.Count == 0)
             {

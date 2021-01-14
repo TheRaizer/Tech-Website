@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from "react";
-import * as actions from "../../Actions/ProductsReducerActions";
+import React, { useEffect, useContext } from "react";
+import * as productActions from "../../Actions/ProductsReducerActions";
+import * as orderActions from "../../Actions/OrderReducerActions";
+import { getPendingOrder } from "../../Actions/OrderActions";
+import { createOrderProduct } from "../../Actions/OrderProductActions";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+import { UserIdContext } from "../../Contexts/UserIdContext";
+import { v4 as uuidv4 } from "uuid";
 import styles from "./part-shop.module.css";
 
 //fetch data depending on the useParams() id from redux store and create a props that can be given to the PartShop Component
 function PartShop(props) {
   const { category } = useParams();
+  const { userInfo } = useContext(UserIdContext); //sets a persistent username held in a context
 
   useEffect(() => {
     props.fetchProductsByCategory(category);
@@ -14,10 +20,42 @@ function PartShop(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const AddToCart = (partInfos, itemType) => {
-    //when order hasnt been created create order then add product.
-    // to do this we can check the database for any pending submission orders, if there is one we will add this product to that order. if there isn't we will add a pending order.
-    //add this product to the order and keep orderStatus as "pending-submission".
+  const AddToCart = (product) => {
+    const exists = getPendingOrder();
+    exists.then((pendingOrder) => {
+      if (pendingOrder.orderId != null) {
+        console.log("pending order exists");
+        const newOrderProduct = {
+          productId: product.productId,
+          orderId: pendingOrder.orderId,
+          paidPrice: product.currentPrice,
+          paidProductName: product.productName,
+        };
+
+        createOrderProduct(newOrderProduct);
+      } else {
+        console.log("No pending order so creating one");
+        let order = {
+          userId: userInfo.userId,
+          orderDate: new Date(),
+          status: "pending-submission",
+          deliveryAddress: "n/a",
+          orderUUID: uuidv4(),
+        };
+
+        console.log(order);
+        props.createOrder(order, (orderId) => {
+          const newOrderProduct = {
+            productId: product.productId,
+            orderId: orderId,
+            paidPrice: product.currentPrice,
+            paidProductName: product.productName,
+          };
+
+          createOrderProduct(newOrderProduct);
+        });
+      }
+    });
   };
   const expensiveProduct = props.products.find(
     (x) => x.productValueType === "EXPENSIVE"
@@ -35,13 +73,13 @@ function PartShop(props) {
         </h1>
       </section>
       <h2>The Expensive</h2>
-      <button onClick={AddToCart}>Add To Cart</button>
+      <button onClick={() => AddToCart(expensiveProduct)}>Add To Cart</button>
       <h5>{expensiveProduct?.productDescription ?? "loading..."}</h5>
       <h2>The Budget</h2>
-      <button onClick={AddToCart}>Add To Cart</button>
+      <button onClick={() => AddToCart(budgetProduct)}>Add To Cart</button>
       <h5>{budgetProduct?.productDescription ?? "loading..."}</h5>
       <h2>The Best</h2>
-      <button onClick={AddToCart}>Add To Cart</button>
+      <button onClick={() => AddToCart(bestProduct)}>Add To Cart</button>
       <h5>{bestProduct?.productDescription ?? "loading..."}</h5>
     </div>
   );
@@ -52,7 +90,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  fetchProductsByCategory: actions.fetchByCategory,
+  fetchProductsByCategory: productActions.fetchByCategory,
+  createOrder: orderActions.createOrder,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PartShop);

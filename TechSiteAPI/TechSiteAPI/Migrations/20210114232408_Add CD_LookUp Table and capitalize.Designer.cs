@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechSiteAPI.Models;
 
 namespace TechSiteAPI.Migrations
 {
     [DbContext(typeof(TechDbContext))]
-    partial class TechDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210114232408_Add CD_LookUp Table and capitalize")]
+    partial class AddCD_LookUpTableandcapitalize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,6 +82,9 @@ namespace TechSiteAPI.Migrations
                     b.Property<int>("ORD_ID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<float>("PAID_PRC")
                         .HasColumnType("real");
 
@@ -90,11 +95,14 @@ namespace TechSiteAPI.Migrations
                     b.Property<int>("PROD_ID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
                     b.HasKey("ORD_PRD_ID");
 
-                    b.HasIndex("ORD_ID");
+                    b.HasIndex("OrderId");
 
-                    b.HasIndex("PROD_ID");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ODR_PRODS");
                 });
@@ -165,15 +173,11 @@ namespace TechSiteAPI.Migrations
                 {
                     b.HasOne("TechSiteAPI.Models.Order", "Order")
                         .WithMany("OrderProducts")
-                        .HasForeignKey("ORD_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("TechSiteAPI.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("PROD_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
                 });
 #pragma warning restore 612, 618
         }

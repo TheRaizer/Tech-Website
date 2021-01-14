@@ -13,29 +13,29 @@ namespace TechSiteAPI.Models
         [DatabaseGenerated(DatabaseGeneratedOption
            .Identity)]
         [Required]
-        public int ProductId { get; set; }
+        public int PROD_ID { get; set; }
 
         [Required]
-        public int Stock { get; set; }
+        public int STOCK { get; set; }
 
         [Required]
-        public float CurrentPrice { get; set; }
+        public float CURNT_PRC { get; set; }
 
         [Required]
-        public int ProductNumber { get; set; }
+        public int PROD_NUM { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(200)")]
-        public string ProductName { get; set; }
+        public string PROD_NAME { get; set; }
         
         [Column(TypeName = "nvarchar(MAX)")]
-        public string ProductDescription { get; set; }
+        public string PROD_DESC { get; set; }
 
         [Column(TypeName = "nvarchar(16)")]
-        public string ProductCategory { get; set; }//GPU, CPU, RAM, etc.
+        public string PROD_CTGRY_CD { get; set; }
 
         [Column(TypeName = "nvarchar(16)")]
-        public string ProductValueType { get; set; }//EXPENSIVE, BUDGET, BEST.
+        public string PROD_VAL_TYPE_CD { get; set; }
 
     }
 }

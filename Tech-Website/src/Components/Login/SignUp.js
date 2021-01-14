@@ -2,6 +2,7 @@ import React, { useContext, useReducer, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import * as actions from "../../Actions/UserReducerActions";
+import { isExistingUser } from "../../Actions/UserActions";
 import {
   initialState,
   SubmissionErrors,
@@ -117,9 +118,10 @@ function SignUp(props) {
       return true;
     }
 
-    const exists = actions.isExistingUser(info.userEmail);
+    const exists = isExistingUser(info.userEmail);
     exists
       .then((userExists) => {
+        //call back to run after exists has been obtained from the server
         if (userExists) {
           // the email must not already exist as an account
           emailActions.emailInUse(dispatch);

@@ -22,15 +22,15 @@ namespace TechSiteAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.USERS.ToListAsync();
         }
 
         //GET: api/Users/{email}&{password}/get
         [HttpGet("{email}&{password}/get")]
         public async Task<ActionResult<User>> GetUserByEmailAndPassword(string email, string password)
         {
-            var users = await _context.Users.ToListAsync();
-            User matchingUser = users.First(x => x.UserEmail == email && x.Password == password);
+            var users = await _context.USERS.ToListAsync();
+            User matchingUser = users.First(x => x.USER_EMAIL == email && x.PASSWORD == password);
 
             if(matchingUser == null)
             {
@@ -45,7 +45,7 @@ namespace TechSiteAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.USERS.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -58,13 +58,13 @@ namespace TechSiteAPI.Controllers
         [HttpGet("{id}/username/")]
         public async Task<ActionResult<string>> GetUserUsername(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.USERS.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            return user.Username;
+            return user.USERNAME;
         }
 
 
@@ -72,7 +72,7 @@ namespace TechSiteAPI.Controllers
         [HttpGet("{email}/check-exists/")]
         public async Task<ActionResult<bool>> UserWithEmailExists(string email)
         {
-            return await _context.Users.AnyAsync(x => x.UserEmail == email);
+            return await _context.USERS.AnyAsync(x => x.USER_EMAIL == email);
         }
 
         // PUT: api/Users/{id}
@@ -82,7 +82,7 @@ namespace TechSiteAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
-            user.UserId = id;
+            user.USER_ID = id;
 
             _context.Entry(user).State = EntityState.Modified;
 
@@ -110,10 +110,10 @@ namespace TechSiteAPI.Controllers
         [HttpPost("post-user")]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            _context.Users.Add(user);
+            _context.USERS.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            return CreatedAtAction("GetUser", new { id = user.USER_ID }, user);
         }
 
 
@@ -121,14 +121,14 @@ namespace TechSiteAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.USERS.FindAsync(id);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.USERS.Remove(user);
             await _context.SaveChangesAsync();
 
             return user;
@@ -136,7 +136,7 @@ namespace TechSiteAPI.Controllers
 
         private bool UserExists(int id)
         {
-            return _context.Users.Any(e => e.UserId == id);
+            return _context.USERS.Any(e => e.USER_ID == id);
         }
     }
 }
