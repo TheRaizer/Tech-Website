@@ -9,8 +9,8 @@ export function users(url = baseUrl + "Users/") {
     fetchUsernameById: (id) => axios.get(url + id + "/username"),
     fetchUserByEmailandPassword: (email, password) =>
       axios.get(url + email + "&" + password + "/get"),
-    isExistingUser: (email) => axios.get(url + email + "/checkexists"),
-    createUser: (newRecord) => axios.post(url + "postuser", newRecord),
+    isExistingUser: (email) => axios.get(url + email + "/check-exists"),
+    createUser: (newRecord) => axios.post(url + "post-user", newRecord),
     updateUser: (id, updatedRecord) => axios.put(url + id, updatedRecord),
     deleteUser: (id) => axios.delete(url + id),
   };
@@ -18,7 +18,14 @@ export function users(url = baseUrl + "Users/") {
 
 export function orders(url = baseUrl + "Orders/") {
   return {
-    createOrder: (newRecord) => axios.post(url + "postorder", newRecord),
+    createOrder: (newRecord) => axios.post(url + "post-order", newRecord),
     fetchUserOrders: (id) => axios.get(url + id + "/orders"),
+  };
+}
+
+export function products(url = baseUrl + "Products/") {
+  return {
+    getProductsByCategory: (category) =>
+      axios.get(url + category + "/get-by-category"),
   };
 }

@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import UserReducer from "./UserReducer";
 import OrderReducer from "./OrderReducer";
+import ProductReducer from "./ProductReducer";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
@@ -22,4 +23,5 @@ const persistedOrderReducer = persistReducer(persistOrderConfig, OrderReducer);
 export const reducers = combineReducers({
   persistedUserReducer,
   persistedOrderReducer,
+  ProductReducer,
 });

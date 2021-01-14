@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechSiteAPI.Models;
 
 namespace TechSiteAPI.Migrations
 {
-    [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(TechDbContext))]
+    [Migration("20210113182236_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,6 +52,32 @@ namespace TechSiteAPI.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("TechSiteAPI.Models.OrderProduct", b =>
+                {
+                    b.Property<int>("OrderProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("PaidPrice")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PaidProductName")
+                        .HasColumnType("real");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderProductId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderProducts");
+                });
+
             modelBuilder.Entity("TechSiteAPI.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -57,8 +85,8 @@ namespace TechSiteAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                    b.Property<float>("CurrentPrice")
+                        .HasColumnType("real");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
@@ -67,9 +95,10 @@ namespace TechSiteAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("ProductId");
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
 
-                    b.HasIndex("OrderId");
+                    b.HasKey("ProductId");
 
                     b.ToTable("Products");
                 });
@@ -104,10 +133,10 @@ namespace TechSiteAPI.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TechSiteAPI.Models.Product", b =>
+            modelBuilder.Entity("TechSiteAPI.Models.OrderProduct", b =>
                 {
                     b.HasOne("TechSiteAPI.Models.Order", null)
-                        .WithMany("Products")
+                        .WithMany("OrderProduct")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

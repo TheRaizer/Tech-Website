@@ -11,15 +11,15 @@ namespace TechSiteAPI.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly UserDbContext _context;
+        private readonly TechDbContext _context;
 
-        public OrdersController(UserDbContext context)
+        public OrdersController(TechDbContext context)
         {
             _context = context;
         }
 
-        //GET: api/Users/{id}
-        [HttpGet("{orderId}/getorder")]
+        //GET: api/Orders/{id}
+        [HttpGet("{orderId}/get-order")]
         public async Task<ActionResult<Order>> GetOrder(int orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);
@@ -27,10 +27,11 @@ namespace TechSiteAPI.Controllers
             {
                 return NotFound();
             }
+            await _context.Entry(order).Collection(o => o.OrderProducts).LoadAsync();
 
             return order;
         }
-        //GET: api/Users/{id}/orders"
+        //GET: api/Orders/{id}/orders"
         [HttpGet("{id}/orders")]
         public async Task<ActionResult<IEnumerable<Order>>> GetUserOrders(int id)
         {
@@ -46,8 +47,8 @@ namespace TechSiteAPI.Controllers
             }
             return orders;
         }
-        // POST: api/Users/postorder
-        [HttpPost("postorder")]
+        // POST: api/Orders/postorder
+        [HttpPost("post-order")]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
             _context.Orders.Add(order);

@@ -11,9 +11,9 @@ namespace TechSiteAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UserDbContext _context;
+        private readonly TechDbContext _context;
 
-        public UsersController(UserDbContext context)
+        public UsersController(TechDbContext context)
         {
             _context = context;
         }
@@ -37,7 +37,7 @@ namespace TechSiteAPI.Controllers
                 //return null;
                 return NotFound();
             }
-
+            await _context.Entry(matchingUser).Collection(u => u.Orders).LoadAsync();//explicit loading
             return matchingUser;
         }
 
@@ -50,22 +50,10 @@ namespace TechSiteAPI.Controllers
             {
                 return NotFound();
             }
-
+            await _context.Entry(user).Collection(u => u.Orders).LoadAsync();//explicit loading
             return user;
         }
 
-        //GET: api/Users/{id}
-        [HttpGet("{orderId}/getorder")]
-        public async Task<ActionResult<Order>> GetOrder(int orderId)
-        {
-            var order = await _context.Orders.FindAsync(orderId);
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            return order;
-        }
         //GET: api/Users/{id}/username/
         [HttpGet("{id}/username/")]
         public async Task<ActionResult<string>> GetUserUsername(int id)
@@ -81,7 +69,7 @@ namespace TechSiteAPI.Controllers
 
 
         //GET: api/Users/{email}/username/
-        [HttpGet("{email}/checkexists/")]
+        [HttpGet("{email}/check-exists/")]
         public async Task<ActionResult<bool>> UserWithEmailExists(string email)
         {
             return await _context.Users.AnyAsync(x => x.UserEmail == email);
@@ -119,7 +107,7 @@ namespace TechSiteAPI.Controllers
         // POST: api/Users/postuser
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost("postuser")]
+        [HttpPost("post-user")]
         public async Task<ActionResult<User>> PostUser(User user)
         {
             _context.Users.Add(user);

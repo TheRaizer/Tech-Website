@@ -28,9 +28,9 @@ namespace TechSiteAPI
         {
             services.AddControllers();
 
-            services.AddDbContext<UserDbContext>(options =>
-            options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DevConnection"))//lazy loading
-            /*options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))*/);
+            services.AddDbContext<TechDbContext>(options =>
+            //options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DevConnection"))//lazy loading
+            options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
 
             services.AddCors();
         }

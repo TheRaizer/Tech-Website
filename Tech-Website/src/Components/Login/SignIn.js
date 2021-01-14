@@ -21,7 +21,8 @@ function SignIn(props) {
       },
       (userId) => {
         setUserInfo({
-          userInfo: { ...userInfo, userId: userId },
+          ...userInfo,
+          userId: userId,
           hasSignedIn: true,
         });
         setCredentials({ email: "", password: "" });

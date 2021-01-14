@@ -29,7 +29,7 @@ namespace TechSiteAPI.Models
 
         [Required]
         public int OrderNumber { get; set; }
-
-        public virtual ICollection<Product> Products { get; set; }
+        
+        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }

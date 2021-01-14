@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as actions from "../../Actions/OrderReducerActions";
 import { UserIdContext } from "../../Contexts/UserIdContext";
 
-function OrderPage(props) {
+function CheckOut(props) {
   const { userInfo } = useContext(UserIdContext); //sets a persistent username held in a context
 
   const SubmitOrder = () => {
@@ -15,11 +15,12 @@ function OrderPage(props) {
     let order = {
       // this will change in the future
       userId: userInfo.userId,
-      productName: "test_name in OrderPage.js",
-      orderDate: new Date(),
-      progress: 0,
+      OrderDate: new Date(),
+      Status: "pending-submission",
+      DeliveryAddress: "avenue",
+      OrderNumber: 2235,
     };
-
+    console.log(userInfo.userId);
     props.createOrder(order);
   };
   return (
@@ -40,4 +41,4 @@ const mapDispatchToProps = {
   createOrder: actions.createOrder,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CheckOut);

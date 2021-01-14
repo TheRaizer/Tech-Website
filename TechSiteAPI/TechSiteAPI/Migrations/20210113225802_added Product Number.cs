@@ -2,13 +2,13 @@
 
 namespace TechSiteAPI.Migrations
 {
-    public partial class AddProgress : Migration
+    public partial class addedProductNumber : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
-                name: "Progress",
-                table: "Orders",
+                name: "ProductNumber",
+                table: "Products",
                 nullable: false,
                 defaultValue: 0);
         }
@@ -16,8 +16,8 @@ namespace TechSiteAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Progress",
-                table: "Orders");
+                name: "ProductNumber",
+                table: "Products");
         }
     }
 }

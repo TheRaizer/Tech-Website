@@ -11,18 +11,31 @@ namespace TechSiteAPI.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption
-        .Identity)]
+           .Identity)]
         [Required]
         public int ProductId { get; set; }
 
         [Required]
-        public int OrderId { get; set; }//foreign key creating a relationship to the Orders table
+        public int Stock { get; set; }
+
+        [Required]
+        public float CurrentPrice { get; set; }
+
+        [Required]
+        public int ProductNumber { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(200)")]
         public string ProductName { get; set; }
+        
+        [Column(TypeName = "nvarchar(MAX)")]
+        public string ProductDescription { get; set; }
 
-        [Required]
-        public float Price { get; set; }
+        [Column(TypeName = "nvarchar(16)")]
+        public string ProductCategory { get; set; }//GPU, CPU, RAM, etc.
+
+        [Column(TypeName = "nvarchar(16)")]
+        public string ProductValueType { get; set; }//EXPENSIVE, BUDGET, BEST.
+
     }
 }

@@ -9,9 +9,9 @@ using TechSiteAPI.Models;
 
 namespace TechSiteAPI.Migrations
 {
-    [DbContext(typeof(UserDbContext))]
-    [Migration("20210113152627_Created Product Table and Modified Order Columns")]
-    partial class CreatedProductTableandModifiedOrderColumns
+    [DbContext(typeof(TechDbContext))]
+    [Migration("20210113224249_Add ProductDescription")]
+    partial class AddProductDescription
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,9 +52,9 @@ namespace TechSiteAPI.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("TechSiteAPI.Models.Product", b =>
+            modelBuilder.Entity("TechSiteAPI.Models.OrderProduct", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("OrderProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -62,18 +62,50 @@ namespace TechSiteAPI.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<float>("PaidPrice")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PaidProductName")
+                        .HasColumnType("real");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderProductId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderProducts");
+                });
+
+            modelBuilder.Entity("TechSiteAPI.Models.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("CurrentPrice")
+                        .HasColumnType("real");
+
                     b.Property<float>("Price")
                         .HasColumnType("real");
+
+                    b.Property<string>("ProductDescription")
+                        .HasColumnType("nvarchar(MAX)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
                     b.HasKey("ProductId");
 
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("TechSiteAPI.Models.User", b =>
@@ -106,11 +138,17 @@ namespace TechSiteAPI.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TechSiteAPI.Models.Product", b =>
+            modelBuilder.Entity("TechSiteAPI.Models.OrderProduct", b =>
                 {
-                    b.HasOne("TechSiteAPI.Models.Order", null)
-                        .WithMany("Products")
+                    b.HasOne("TechSiteAPI.Models.Order", "Order")
+                        .WithMany("OrderProducts")
                         .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TechSiteAPI.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

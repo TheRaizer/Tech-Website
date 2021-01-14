@@ -13,7 +13,7 @@ function PartsChoices() {
             <ClickableImage
               key={icon.id}
               iconSrc={icon.src}
-              link={"/part/" + icon.id}
+              link={"/part/" + icon.name}
             />
           );
         })}

@@ -2,7 +2,6 @@ import { ACTION_TYPES } from "../Actions/UserReducerActions";
 
 const initialState = {
   username: "",
-  orderIds: [], //this can be changed to orderNumber
 };
 
 export function UserReducer(state = initialState, action) {
