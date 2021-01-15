@@ -35,7 +35,7 @@ function ReactRouterSetup() {
         <Route path="/checkout">
           <CheckOut />
         </Route>
-        <Route path="/part/:category" children={<PartShop />}></Route>
+        <Route path="/part/:categoryCode" children={<PartShop />}></Route>
         {/* The * path means it will run on any path */}
         <Route
           path="*"

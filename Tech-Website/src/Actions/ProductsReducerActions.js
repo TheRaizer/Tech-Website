@@ -4,9 +4,9 @@ export const ACTION_TYPES = {
   FETCH_BY_CATEGORY: "FETCH_BY_CATEGORY",
 };
 
-export const fetchByCategory = (category) => (dispatch) => {
+export const fetchProductsByCategoryCode = (categoryCode) => (dispatch) => {
   products()
-    .getProductsByCategory(category)
+    .getProductsByCategoryCode(categoryCode)
     .then((response) => {
       dispatch({
         type: ACTION_TYPES.FETCH_BY_CATEGORY,

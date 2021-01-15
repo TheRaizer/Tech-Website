@@ -16,7 +16,7 @@ namespace TechSiteAPI.Models
         public DbSet<User> USERS { get; set; }
         public DbSet<Order> ORDS { get; set; }
         public DbSet<Product> PRODS { get; set; }
-        public DbSet<OrderProduct> ODR_PRODS { get; set; }
+        public DbSet<OrderProduct> ORD_PRODS { get; set; }
         public DbSet<CD_LookUp> CD_LKUP { get; set; }
     }
 }

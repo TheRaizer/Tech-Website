@@ -23,7 +23,7 @@ namespace TechSiteAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderProduct>>> GetOrderProducts()
         {
-            return await _context.ODR_PRODS.ToListAsync();
+            return await _context.ORD_PRODS.ToListAsync();
         }
 
         //GET: api/OrderProducts/get-orderproduct
@@ -42,7 +42,7 @@ namespace TechSiteAPI.Controllers
         [HttpPost("post-orderproduct")]
         public async Task<ActionResult<Product>> PostOrderProduct(OrderProduct orderProduct)
         {
-            _context.ODR_PRODS.Add(orderProduct);
+            _context.ORD_PRODS.Add(orderProduct);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrderProduct", new { id = orderProduct.ORD_PRD_ID }, orderProduct);

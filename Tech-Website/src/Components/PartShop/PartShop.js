@@ -1,8 +1,9 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import * as productActions from "../../Actions/ProductsReducerActions";
 import * as orderActions from "../../Actions/OrderReducerActions";
 import { getPendingOrder } from "../../Actions/OrderActions";
 import { createOrderProduct } from "../../Actions/OrderProductActions";
+import { getProductCategory } from "../../Actions/ProductActions";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { UserIdContext } from "../../Contexts/UserIdContext";
@@ -11,11 +12,13 @@ import styles from "./part-shop.module.css";
 
 //fetch data depending on the useParams() id from redux store and create a props that can be given to the PartShop Component
 function PartShop(props) {
-  const { category } = useParams();
+  const { categoryCode } = useParams();
   const { userInfo } = useContext(UserIdContext); //sets a persistent username held in a context
+  const [category, setCategory] = useState("...loading");
 
   useEffect(() => {
-    props.fetchProductsByCategory(category);
+    props.fetchProductsByCategoryCode(categoryCode);
+    getProductCategory(categoryCode).then((ctgry) => setCategory(ctgry));
     window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -38,12 +41,10 @@ function PartShop(props) {
         let order = {
           userId: userInfo.userId,
           orderDate: new Date(),
-          status: "pending-submission",
+          statusCode: "0",
           deliveryAddress: "n/a",
           orderUUID: uuidv4(),
         };
-
-        console.log(order);
         props.createOrder(order, (orderId) => {
           const newOrderProduct = {
             productId: product.productId,
@@ -51,12 +52,12 @@ function PartShop(props) {
             paidPrice: product.currentPrice,
             paidProductName: product.productName,
           };
-
           createOrderProduct(newOrderProduct);
         });
       }
     });
   };
+
   const expensiveProduct = props.products.find(
     (x) => x.productValueTypeCode === "2"
   );
@@ -92,7 +93,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  fetchProductsByCategory: productActions.fetchByCategory,
+  fetchProductsByCategoryCode: productActions.fetchProductsByCategoryCode,
   createOrder: orderActions.createOrder,
 };
 

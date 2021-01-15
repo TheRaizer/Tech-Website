@@ -18,9 +18,11 @@ namespace TechSiteAPI.Models
         public int ORD_PRD_ID { get; set; }
 
         [Required]
+        [JsonPropertyName("productId")]
         public int PROD_ID { get; set; }//foreign key creating a relationship to the Products table
 
         [Required]
+        [JsonPropertyName("orderId")]
         public int ORD_ID { get; set; }//foreign key creating a relationship to the Orders table
 
         [Required]

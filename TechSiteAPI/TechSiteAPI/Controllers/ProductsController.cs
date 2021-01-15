@@ -27,13 +27,13 @@ namespace TechSiteAPI.Controllers
         }
 
         //GET: api/Products/get-by-category"
-        [HttpGet("{productCategory}/get-by-category")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string productCategory)
+        [HttpGet("{productCategoryCode}/get-by-category")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategoryCode(string productCategoryCode)
         {
             var products = await _context.PRODS.ToListAsync();
             List<Product> matchingProducts = new List<Product>();
 
-            matchingProducts = products.FindAll(x => x.PROD_CTGRY_CD == productCategory);
+            matchingProducts = products.FindAll(x => x.PROD_CTGRY_CD == productCategoryCode);
 
             if (matchingProducts.Count == 0)
             {
@@ -41,6 +41,19 @@ namespace TechSiteAPI.Controllers
             }
 
             return matchingProducts;
+        }
+        //GET: api/Products/get-by-category"
+        [HttpGet("{categoryCode}/get-category")]
+        public async Task<ActionResult<string>> GetCategoryFromCode(string categoryCode)
+        {
+            var codeLookUp =  await _context.CD_LKUP.FirstOrDefaultAsync(x => x.TYPE == "PROD_CTGRY" && x.CD_VAL == categoryCode);
+
+            if(codeLookUp == null)
+            {
+                return NotFound();
+            }
+
+            return codeLookUp.DESC;
         }
     }
 }

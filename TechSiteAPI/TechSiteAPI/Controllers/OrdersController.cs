@@ -26,7 +26,7 @@ namespace TechSiteAPI.Controllers
             return await _context.ORDS.ToListAsync();
         }
 
-        //GET: api/Orders/{id}
+        //GET: api/Orders/{id}/get-order
         [HttpGet("{orderId}/get-order")]
         public async Task<ActionResult<Order>> GetOrder(int orderId)
         {
@@ -56,7 +56,7 @@ namespace TechSiteAPI.Controllers
             }
             return orders;
         }
-        // POST: api/Orders/postorder
+        // POST: api/Orders/post-order
         [HttpPost("post-order")]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
