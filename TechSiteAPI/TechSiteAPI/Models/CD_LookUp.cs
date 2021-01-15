@@ -6,7 +6,8 @@ namespace TechSiteAPI.Models
     public class CD_LookUp
     {
         [Required]
-        public int CD_VAL { get; set; }
+        [Column(TypeName = "nvarchar(3)")]
+        public string CD_VAL { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(200)")]
         public string TYPE { get; set; }

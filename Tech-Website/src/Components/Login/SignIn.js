@@ -17,9 +17,9 @@ function SignIn(props) {
       credentials.password,
       () => {
         setIsValid(false);
-        setCredentials({ email: "", password: "" });
       },
       (userId) => {
+        console.log(userId);
         setUserInfo({
           ...userInfo,
           userId: userId,

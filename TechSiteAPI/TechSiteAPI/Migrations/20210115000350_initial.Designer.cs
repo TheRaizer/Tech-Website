@@ -10,8 +10,8 @@ using TechSiteAPI.Models;
 namespace TechSiteAPI.Migrations
 {
     [DbContext(typeof(TechDbContext))]
-    [Migration("20210113182236_Initial")]
-    partial class Initial
+    [Migration("20210115000350_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,123 +21,158 @@ namespace TechSiteAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("TechSiteAPI.Models.CD_LookUp", b =>
+                {
+                    b.Property<int>("CD_VAL")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DESC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(MAX)");
+
+                    b.Property<string>("TYPE")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)");
+
+                    b.ToTable("CD_LKUP");
+                });
+
             modelBuilder.Entity("TechSiteAPI.Models.Order", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("ORD_ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DeliveryAddress")
+                    b.Property<string>("DLIV_ADRR")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime>("OrderDate")
+                    b.Property<DateTime>("ORD_DATE")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("ORD_UUID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(36)");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("STATUS_CD")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("USER_ID")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId");
+                    b.HasKey("ORD_ID");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("USER_ID");
 
-                    b.ToTable("Orders");
+                    b.ToTable("ORDS");
                 });
 
             modelBuilder.Entity("TechSiteAPI.Models.OrderProduct", b =>
                 {
-                    b.Property<int>("OrderProductId")
+                    b.Property<int>("ORD_PRD_ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("OrderId")
+                    b.Property<int>("ORD_ID")
                         .HasColumnType("int");
 
-                    b.Property<float>("PaidPrice")
+                    b.Property<float>("PAID_PRC")
                         .HasColumnType("real");
 
-                    b.Property<float>("PaidProductName")
-                        .HasColumnType("real");
+                    b.Property<string>("PAID_PROD_NM")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("PROD_ID")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderProductId");
+                    b.HasKey("ORD_PRD_ID");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("ORD_ID");
 
-                    b.ToTable("OrderProducts");
+                    b.HasIndex("PROD_ID");
+
+                    b.ToTable("ODR_PRODS");
                 });
 
             modelBuilder.Entity("TechSiteAPI.Models.Product", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("PROD_ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("CurrentPrice")
+                    b.Property<float>("CURNT_PRC")
                         .HasColumnType("real");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<string>("PROD_CTGRY_CD")
+                        .HasColumnType("nvarchar(16)");
 
-                    b.Property<string>("ProductName")
+                    b.Property<string>("PROD_DESC")
+                        .HasColumnType("nvarchar(MAX)");
+
+                    b.Property<string>("PROD_NAME")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("Stock")
+                    b.Property<int>("PROD_NUM")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductId");
+                    b.Property<string>("PROD_VAL_TYPE_CD")
+                        .HasColumnType("nvarchar(16)");
 
-                    b.ToTable("Products");
+                    b.Property<int>("STOCK")
+                        .HasColumnType("int");
+
+                    b.HasKey("PROD_ID");
+
+                    b.ToTable("PRODS");
                 });
 
             modelBuilder.Entity("TechSiteAPI.Models.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("USER_ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PASSWORD")
                         .HasColumnType("nvarchar(12)");
 
-                    b.Property<string>("UserEmail")
-                        .HasColumnType("nvarchar(320)");
-
-                    b.Property<string>("Username")
+                    b.Property<string>("USERNAME")
                         .HasColumnType("nvarchar(15)");
 
-                    b.HasKey("UserId");
+                    b.Property<string>("USER_EMAIL")
+                        .HasColumnType("nvarchar(320)");
 
-                    b.ToTable("Users");
+                    b.HasKey("USER_ID");
+
+                    b.ToTable("USERS");
                 });
 
             modelBuilder.Entity("TechSiteAPI.Models.Order", b =>
                 {
-                    b.HasOne("TechSiteAPI.Models.User", null)
+                    b.HasOne("TechSiteAPI.Models.User", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("USER_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("TechSiteAPI.Models.OrderProduct", b =>
                 {
-                    b.HasOne("TechSiteAPI.Models.Order", null)
-                        .WithMany("OrderProduct")
-                        .HasForeignKey("OrderId")
+                    b.HasOne("TechSiteAPI.Models.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("ORD_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TechSiteAPI.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("PROD_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -72,7 +72,7 @@ namespace TechSiteAPI.Controllers
         [HttpGet("get-pending-order")]
         public async Task<ActionResult<Order>> GetPendingOrder()
         {
-            return await _context.ORDS.FirstOrDefaultAsync(x => x.STATUS_CD == "pending-submission");
+            return await _context.ORDS.FirstOrDefaultAsync(x => x.STATUS_CD == "0");
         }
     }
 }

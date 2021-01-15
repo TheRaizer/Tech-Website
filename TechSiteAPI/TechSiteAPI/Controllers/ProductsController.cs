@@ -32,6 +32,7 @@ namespace TechSiteAPI.Controllers
         {
             var products = await _context.PRODS.ToListAsync();
             List<Product> matchingProducts = new List<Product>();
+
             matchingProducts = products.FindAll(x => x.PROD_CTGRY_CD == productCategory);
 
             if (matchingProducts.Count == 0)

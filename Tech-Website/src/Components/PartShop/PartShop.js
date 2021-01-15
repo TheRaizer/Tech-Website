@@ -58,12 +58,14 @@ function PartShop(props) {
     });
   };
   const expensiveProduct = props.products.find(
-    (x) => x.productValueType === "EXPENSIVE"
+    (x) => x.productValueTypeCode === "2"
   );
   const budgetProduct = props.products.find(
-    (x) => x.productValueType === "BUDGET"
+    (x) => x.productValueTypeCode === "0"
   );
-  const bestProduct = props.products.find((x) => x.productValueType === "BEST");
+  const bestProduct = props.products.find(
+    (x) => x.productValueTypeCode === "1"
+  );
 
   return (
     <div>
