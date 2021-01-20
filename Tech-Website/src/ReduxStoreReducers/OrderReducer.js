@@ -1,4 +1,4 @@
-import { ACTION_TYPES } from "../Actions/UserReducerActions";
+import { ACTION_TYPES } from "../Actions/OrderReducerActions";
 
 const initialState = {
   orderUUIDs: [],
@@ -19,7 +19,7 @@ export function OrderReducer(state = initialState, action) {
       console.log("order numbers fetched ", orderUUIDs);
       return {
         ...state,
-        orderNumbers: orderUUIDs,
+        orderUUIDs: orderUUIDs,
       };
     //no need to use any other ACTION_TYPES as we do not need to modify any of the state when using them. default case will run
     default:

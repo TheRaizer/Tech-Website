@@ -37,10 +37,8 @@ namespace TechSiteAPI.Models
         [Column(TypeName = "nvarchar(36)")]
         [JsonPropertyName("orderUUID")]
         public string ORD_UUID { get; set; }
-
-        [ForeignKey("USER_ID")]
-        public virtual User User { get; set; }
         
+        [ForeignKey("ORD_ID")]
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }

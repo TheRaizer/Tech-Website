@@ -157,7 +157,7 @@ namespace TechSiteAPI.Migrations
 
             modelBuilder.Entity("TechSiteAPI.Models.Order", b =>
                 {
-                    b.HasOne("TechSiteAPI.Models.User", "User")
+                    b.HasOne("TechSiteAPI.Models.User", null)
                         .WithMany("Orders")
                         .HasForeignKey("USER_ID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -166,7 +166,7 @@ namespace TechSiteAPI.Migrations
 
             modelBuilder.Entity("TechSiteAPI.Models.OrderProduct", b =>
                 {
-                    b.HasOne("TechSiteAPI.Models.Order", "Order")
+                    b.HasOne("TechSiteAPI.Models.Order", null)
                         .WithMany("OrderProducts")
                         .HasForeignKey("ORD_ID")
                         .OnDelete(DeleteBehavior.Cascade)

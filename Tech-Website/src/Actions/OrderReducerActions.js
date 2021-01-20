@@ -20,7 +20,7 @@ export const createOrder = (newOrder, addOrderProductOnCreate) => (
     .catch((err) => console.log(err));
 };
 
-export const fetchUserOrders = (userId) => (dispatch) => {
+export const fetchUserOrders = (userId, onSuccess) => (dispatch) => {
   orders()
     .fetchUserOrders(userId)
     .then((response) => {
@@ -28,6 +28,7 @@ export const fetchUserOrders = (userId) => (dispatch) => {
         type: ACTION_TYPES.FETCH_USER_ORDERS,
         payload: response.data,
       });
+      onSuccess();
     })
     .catch((err) => console.log(err));
 };

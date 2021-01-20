@@ -10,8 +10,8 @@ using TechSiteAPI.Models;
 namespace TechSiteAPI.Migrations
 {
     [DbContext(typeof(TechDbContext))]
-    [Migration("20210115010410_Changed CD_LKUP value data type")]
-    partial class ChangedCD_LKUPvaluedatatype
+    [Migration("20210120145219_Changed Foreign key annotation in Order ref to OrderProduct")]
+    partial class ChangedForeignkeyannotationinOrderreftoOrderProduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -96,7 +96,7 @@ namespace TechSiteAPI.Migrations
 
                     b.HasIndex("PROD_ID");
 
-                    b.ToTable("ODR_PRODS");
+                    b.ToTable("ORD_PRODS");
                 });
 
             modelBuilder.Entity("TechSiteAPI.Models.Product", b =>
@@ -159,7 +159,7 @@ namespace TechSiteAPI.Migrations
 
             modelBuilder.Entity("TechSiteAPI.Models.Order", b =>
                 {
-                    b.HasOne("TechSiteAPI.Models.User", "User")
+                    b.HasOne("TechSiteAPI.Models.User", null)
                         .WithMany("Orders")
                         .HasForeignKey("USER_ID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -168,7 +168,7 @@ namespace TechSiteAPI.Migrations
 
             modelBuilder.Entity("TechSiteAPI.Models.OrderProduct", b =>
                 {
-                    b.HasOne("TechSiteAPI.Models.Order", "Order")
+                    b.HasOne("TechSiteAPI.Models.Order", null)
                         .WithMany("OrderProducts")
                         .HasForeignKey("ORD_ID")
                         .OnDelete(DeleteBehavior.Cascade)

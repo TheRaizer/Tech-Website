@@ -1,36 +1,40 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { UserIdContext } from "../../Contexts/UserIdContext";
 import * as actions from "../../Actions/OrderReducerActions";
 
 function UserOrders(props) {
   const { userInfo } = useContext(UserIdContext);
+  const [hasLoaded, setHasLoaded] = useState(false);
   useEffect(() => {
-    props.fetchOrders(userInfo.userId);
+    props.fetchUserOrders(userInfo.userId, () => {
+      setHasLoaded(true);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  if (!hasLoaded) {
+    return <h1>Loading Orders...</h1>;
+  }
 
-  if (props.orderIds == null) {
-    return <h1>No Orders</h1>;
-  } else if (props.orderIds.length <= 0) {
+  if (props.orderUUIDs == null || props.orderUUIDs.length <= 0) {
     return <h1>No Orders</h1>;
   } else {
-    return props.orderIds.map((orderId) => {
-      return <Order key={orderId} orderId={orderId} />;
+    return props.orderUUIDs.map((orderUUID) => {
+      return <Order key={orderUUID} orderUUID={orderUUID} />;
     });
   }
 }
 
 const Order = (props) => {
-  return <p>{props.orderId}</p>;
+  return <p>{props.orderUUID}</p>;
 };
 
 const mapStateToProps = (state) => ({
-  orderIds: state.persistedUserReducer.orders,
+  orderUUIDs: state.persistedOrderReducer.orderUUIDs,
 });
 
 const mapDispatchToProps = {
-  fetchOrders: actions.fetchUserOrders,
+  fetchUserOrders: actions.fetchUserOrders,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserOrders);

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TechSiteAPI.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace TechSiteAPI.Migrations
                 name: "CD_LKUP",
                 columns: table => new
                 {
-                    CD_VAL = table.Column<int>(nullable: false),
+                    CD_VAL = table.Column<string>(type: "nvarchar(3)", nullable: false),
                     TYPE = table.Column<string>(type: "nvarchar(200)", nullable: false),
                     DESC = table.Column<string>(type: "nvarchar(MAX)", nullable: false)
                 },
@@ -29,9 +29,9 @@ namespace TechSiteAPI.Migrations
                     CURNT_PRC = table.Column<float>(nullable: false),
                     PROD_NUM = table.Column<int>(nullable: false),
                     PROD_NAME = table.Column<string>(type: "nvarchar(200)", nullable: false),
-                    PROD_DESC = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
-                    PROD_CTGRY_CD = table.Column<string>(type: "nvarchar(16)", nullable: true),
-                    PROD_VAL_TYPE_CD = table.Column<string>(type: "nvarchar(16)", nullable: true)
+                    PROD_DESC = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    PROD_CTGRY_CD = table.Column<string>(type: "nvarchar(3)", nullable: false),
+                    PROD_VAL_TYPE_CD = table.Column<string>(type: "nvarchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,7 +61,7 @@ namespace TechSiteAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     USER_ID = table.Column<int>(nullable: false),
                     ORD_DATE = table.Column<DateTime>(nullable: false),
-                    STATUS_CD = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    STATUS_CD = table.Column<string>(type: "nvarchar(3)", nullable: false),
                     DLIV_ADRR = table.Column<string>(type: "nvarchar(200)", nullable: false),
                     ORD_UUID = table.Column<string>(type: "nvarchar(36)", nullable: false)
                 },
@@ -77,7 +77,7 @@ namespace TechSiteAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ODR_PRODS",
+                name: "ORD_PRODS",
                 columns: table => new
                 {
                     ORD_PRD_ID = table.Column<int>(nullable: false)
@@ -85,19 +85,20 @@ namespace TechSiteAPI.Migrations
                     PROD_ID = table.Column<int>(nullable: false),
                     ORD_ID = table.Column<int>(nullable: false),
                     PAID_PRC = table.Column<float>(nullable: false),
-                    PAID_PROD_NM = table.Column<string>(type: "nvarchar(1000)", nullable: false)
+                    PAID_PROD_NM = table.Column<string>(type: "nvarchar(1000)", nullable: false),
+                    ORDER_ID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ODR_PRODS", x => x.ORD_PRD_ID);
+                    table.PrimaryKey("PK_ORD_PRODS", x => x.ORD_PRD_ID);
                     table.ForeignKey(
-                        name: "FK_ODR_PRODS_ORDS_ORD_ID",
-                        column: x => x.ORD_ID,
+                        name: "FK_ORD_PRODS_ORDS_ORDER_ID",
+                        column: x => x.ORDER_ID,
                         principalTable: "ORDS",
                         principalColumn: "ORD_ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ODR_PRODS_PRODS_PROD_ID",
+                        name: "FK_ORD_PRODS_PRODS_PROD_ID",
                         column: x => x.PROD_ID,
                         principalTable: "PRODS",
                         principalColumn: "PROD_ID",
@@ -105,13 +106,13 @@ namespace TechSiteAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ODR_PRODS_ORD_ID",
-                table: "ODR_PRODS",
-                column: "ORD_ID");
+                name: "IX_ORD_PRODS_ORDER_ID",
+                table: "ORD_PRODS",
+                column: "ORDER_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ODR_PRODS_PROD_ID",
-                table: "ODR_PRODS",
+                name: "IX_ORD_PRODS_PROD_ID",
+                table: "ORD_PRODS",
                 column: "PROD_ID");
 
             migrationBuilder.CreateIndex(
@@ -126,7 +127,7 @@ namespace TechSiteAPI.Migrations
                 name: "CD_LKUP");
 
             migrationBuilder.DropTable(
-                name: "ODR_PRODS");
+                name: "ORD_PRODS");
 
             migrationBuilder.DropTable(
                 name: "ORDS");

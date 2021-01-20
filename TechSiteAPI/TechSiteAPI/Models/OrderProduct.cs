@@ -34,9 +34,6 @@ namespace TechSiteAPI.Models
         [JsonPropertyName("paidProductName")]
         public string PAID_PROD_NM { get; set; }
 
-        [ForeignKey("ORD_ID")]
-        public virtual Order Order { get; set; }
-
         [ForeignKey("PROD_ID")]
         public virtual Product Product { get; set; }
     }

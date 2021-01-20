@@ -40,14 +40,15 @@ namespace TechSiteAPI.Controllers
             return order;
         }
         //GET: api/Orders/{id}/orders"
-        [HttpGet("{id}/orders")]
-        public async Task<ActionResult<IEnumerable<Order>>> GetUserOrders(int id)
+        [HttpGet("{userId}/get-user-orders")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetUserOrders(int userId)
         {
-            var user = await _context.USERS.FindAsync(id);
+            var user = await _context.USERS.FindAsync(userId);
             if (user == null)
             {
                 return BadRequest();
             }
+            //var orders = await _context.ORDS.Where(o => o.USER_ID == userId).ToListAsync();// if the load async doesnt load everything use this line instead
             await _context.Entry(user).Collection(o => o.Orders).LoadAsync();
             var orders = user.Orders.ToList();
             if (orders == null || orders.Count == 0)

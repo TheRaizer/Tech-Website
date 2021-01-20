@@ -28,6 +28,7 @@ namespace TechSiteAPI.Models
         [JsonPropertyName("password")]
         public string PASSWORD { get; set; }
 
+        [ForeignKey("USER_ID")]
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

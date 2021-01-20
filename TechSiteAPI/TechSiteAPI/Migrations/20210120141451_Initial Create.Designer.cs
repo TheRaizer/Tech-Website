@@ -10,8 +10,8 @@ using TechSiteAPI.Models;
 namespace TechSiteAPI.Migrations
 {
     [DbContext(typeof(TechDbContext))]
-    [Migration("20210115001804_Make columns required in Product")]
-    partial class MakecolumnsrequiredinProduct
+    [Migration("20210120141451_Initial Create")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,8 +23,9 @@ namespace TechSiteAPI.Migrations
 
             modelBuilder.Entity("TechSiteAPI.Models.CD_LookUp", b =>
                 {
-                    b.Property<int>("CD_VAL")
-                        .HasColumnType("int");
+                    b.Property<string>("CD_VAL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("DESC")
                         .IsRequired()
@@ -57,7 +58,7 @@ namespace TechSiteAPI.Migrations
 
                     b.Property<string>("STATUS_CD")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<int>("USER_ID")
                         .HasColumnType("int");
@@ -76,6 +77,9 @@ namespace TechSiteAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ORDER_ID")
+                        .HasColumnType("int");
+
                     b.Property<int>("ORD_ID")
                         .HasColumnType("int");
 
@@ -91,11 +95,11 @@ namespace TechSiteAPI.Migrations
 
                     b.HasKey("ORD_PRD_ID");
 
-                    b.HasIndex("ORD_ID");
+                    b.HasIndex("ORDER_ID");
 
                     b.HasIndex("PROD_ID");
 
-                    b.ToTable("ODR_PRODS");
+                    b.ToTable("ORD_PRODS");
                 });
 
             modelBuilder.Entity("TechSiteAPI.Models.Product", b =>
@@ -110,7 +114,7 @@ namespace TechSiteAPI.Migrations
 
                     b.Property<string>("PROD_CTGRY_CD")
                         .IsRequired()
-                        .HasColumnType("nvarchar(16)");
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("PROD_DESC")
                         .IsRequired()
@@ -125,7 +129,7 @@ namespace TechSiteAPI.Migrations
 
                     b.Property<string>("PROD_VAL_TYPE_CD")
                         .IsRequired()
-                        .HasColumnType("nvarchar(16)");
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<int>("STOCK")
                         .HasColumnType("int");
@@ -158,7 +162,7 @@ namespace TechSiteAPI.Migrations
 
             modelBuilder.Entity("TechSiteAPI.Models.Order", b =>
                 {
-                    b.HasOne("TechSiteAPI.Models.User", "User")
+                    b.HasOne("TechSiteAPI.Models.User", null)
                         .WithMany("Orders")
                         .HasForeignKey("USER_ID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -167,11 +171,9 @@ namespace TechSiteAPI.Migrations
 
             modelBuilder.Entity("TechSiteAPI.Models.OrderProduct", b =>
                 {
-                    b.HasOne("TechSiteAPI.Models.Order", "Order")
+                    b.HasOne("TechSiteAPI.Models.Order", null)
                         .WithMany("OrderProducts")
-                        .HasForeignKey("ORD_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ORDER_ID");
 
                     b.HasOne("TechSiteAPI.Models.Product", "Product")
                         .WithMany()
