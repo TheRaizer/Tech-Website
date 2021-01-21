@@ -39,6 +39,21 @@ namespace TechSiteAPI.Controllers
 
             return order;
         }
+
+        //GET: api/Orders/{UUID}/get-order-by-UUID
+        [HttpGet("{UUID}/get-order-by-UUID")]
+        public async Task<ActionResult<Order>> GetOrderByUUID(string UUID)
+        {
+            var order = await _context.ORDS.FirstOrDefaultAsync(x => x.ORD_UUID == UUID);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            await _context.Entry(order).Collection(o => o.OrderProducts).LoadAsync();
+
+            return order;
+        }
+
         //GET: api/Orders/{id}/orders"
         [HttpGet("{userId}/get-user-orders")]
         public async Task<ActionResult<IEnumerable<Order>>> GetUserOrders(int userId)

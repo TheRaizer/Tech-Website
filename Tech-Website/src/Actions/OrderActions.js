@@ -8,3 +8,12 @@ export const getPendingOrder = async () => {
     return console.log(err);
   }
 };
+
+export const getOrderByUUID = async (uuid) => {
+  try {
+    const response = await orders().getOrderByUUID(uuid);
+    return response.data;
+  } catch (err) {
+    return console.log(err);
+  }
+};

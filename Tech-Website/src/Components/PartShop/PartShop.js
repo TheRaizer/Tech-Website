@@ -12,25 +12,19 @@ import styles from "./part-shop.module.css";
 
 //fetch data depending on the useParams() id from redux store and create a props that can be given to the PartShop Component
 function PartShop(props) {
+  const { fetchProductsByCategoryCode, products } = props;
   const { categoryCode } = useParams();
   const [category, setCategory] = useState("...loading");
 
   useEffect(() => {
-    props.fetchProductsByCategoryCode(categoryCode);
+    fetchProductsByCategoryCode(categoryCode);
     getProductCategory(categoryCode).then((ctgry) => setCategory(ctgry));
     window.scrollTo(0, 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [categoryCode, fetchProductsByCategoryCode]);
 
-  const expensiveProduct = props.products.find(
-    (x) => x.productValueTypeCode === "2"
-  );
-  const budgetProduct = props.products.find(
-    (x) => x.productValueTypeCode === "0"
-  );
-  const bestProduct = props.products.find(
-    (x) => x.productValueTypeCode === "1"
-  );
+  const expensiveProduct = products.find((x) => x.productValueTypeCode === "2");
+  const budgetProduct = products.find((x) => x.productValueTypeCode === "0");
+  const bestProduct = products.find((x) => x.productValueTypeCode === "1");
 
   return (
     <div>
@@ -53,8 +47,9 @@ const Product = (props) => {
   const { userInfo } = useContext(UserIdContext); //sets a persistent username held in a context
 
   const AddToCart = (product) => {
-    const exists = getPendingOrder();
-    exists.then((pendingOrder) => {
+    const pendingOrder = getPendingOrder();
+    pendingOrder.then((pendingOrder) => {
+      // check if pending order exists by checking if orderId is null
       if (pendingOrder.orderId != null) {
         console.log("pending order exists");
         const newOrderProduct = {
