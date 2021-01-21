@@ -13,7 +13,6 @@ import styles from "./part-shop.module.css";
 //fetch data depending on the useParams() id from redux store and create a props that can be given to the PartShop Component
 function PartShop(props) {
   const { categoryCode } = useParams();
-  const { userInfo } = useContext(UserIdContext); //sets a persistent username held in a context
   const [category, setCategory] = useState("...loading");
 
   useEffect(() => {
@@ -22,6 +21,36 @@ function PartShop(props) {
     window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const expensiveProduct = props.products.find(
+    (x) => x.productValueTypeCode === "2"
+  );
+  const budgetProduct = props.products.find(
+    (x) => x.productValueTypeCode === "0"
+  );
+  const bestProduct = props.products.find(
+    (x) => x.productValueTypeCode === "1"
+  );
+
+  return (
+    <div>
+      <section className="header">
+        <h1 className={styles.heading}>
+          The Expensive, Budget, and Best of {category}
+        </h1>
+      </section>
+      <h2>The Expensive</h2>
+      <Product product={expensiveProduct} {...props} />
+      <h2>The Budget</h2>
+      <Product product={budgetProduct} {...props} />
+      <h2>The Best</h2>
+      <Product product={bestProduct} {...props} />
+    </div>
+  );
+}
+
+const Product = (props) => {
+  const { userInfo } = useContext(UserIdContext); //sets a persistent username held in a context
 
   const AddToCart = (product) => {
     const exists = getPendingOrder();
@@ -58,35 +87,25 @@ function PartShop(props) {
     });
   };
 
-  const expensiveProduct = props.products.find(
-    (x) => x.productValueTypeCode === "2"
-  );
-  const budgetProduct = props.products.find(
-    (x) => x.productValueTypeCode === "0"
-  );
-  const bestProduct = props.products.find(
-    (x) => x.productValueTypeCode === "1"
-  );
-
   return (
-    <div>
-      <section className="header">
-        <h1 className={styles.heading}>
-          The Expensive, Budget, and Best of {category}
-        </h1>
+    <section>
+      <section>
+        {userInfo.hasSignedIn ? (
+          props.product?.stock > 0 ? (
+            <button onClick={() => AddToCart(props.product)}>
+              Add To Cart
+            </button>
+          ) : (
+            <p>out of stock</p>
+          )
+        ) : (
+          <p>Cannot Add to cart if not signed in</p>
+        )}
       </section>
-      <h2>The Expensive</h2>
-      <button onClick={() => AddToCart(expensiveProduct)}>Add To Cart</button>
-      <h5>{expensiveProduct?.productDescription ?? "loading..."}</h5>
-      <h2>The Budget</h2>
-      <button onClick={() => AddToCart(budgetProduct)}>Add To Cart</button>
-      <h5>{budgetProduct?.productDescription ?? "loading..."}</h5>
-      <h2>The Best</h2>
-      <button onClick={() => AddToCart(bestProduct)}>Add To Cart</button>
-      <h5>{bestProduct?.productDescription ?? "loading..."}</h5>
-    </div>
+      <h5>{props.product?.productDescription ?? "loading..."}</h5>
+    </section>
   );
-}
+};
 
 const mapStateToProps = (state) => ({
   products: state.ProductReducer.products,
