@@ -1,8 +1,10 @@
 import axios from "axios";
 
+// the url used to access the web api
 const baseUrl = "http://localhost:57528/api/";
 
 export function users(url = baseUrl + "Users/") {
+  // axios http requests that can be used for attaining, changing or adding users by contacting the web api
   return {
     fetchAll: () => axios.get(url),
     fetchById: (id) => axios.get(url + id),
@@ -17,6 +19,7 @@ export function users(url = baseUrl + "Users/") {
 }
 
 export function orders(url = baseUrl + "Orders/") {
+  // axios http requests for modifying or getting orders
   return {
     createOrder: (newRecord) => axios.post(url + "post-order", newRecord),
     fetchUserOrders: (id) => axios.get(url + id + "/get-user-orders"),
@@ -26,6 +29,7 @@ export function orders(url = baseUrl + "Orders/") {
 }
 
 export function orderProducts(url = baseUrl + "OrderProducts/") {
+  // axios http requests for modifying or getting orderProducts
   return {
     createOrderProduct: (newOrderProduct) =>
       axios.post(url + "post-orderproduct", newOrderProduct),
@@ -33,6 +37,7 @@ export function orderProducts(url = baseUrl + "OrderProducts/") {
 }
 
 export function products(url = baseUrl + "Products/") {
+  // axios http requests for getting info on products
   return {
     getProductsByCategoryCode: (categoryCode) =>
       axios.get(url + categoryCode + "/get-by-category"),

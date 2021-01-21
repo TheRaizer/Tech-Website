@@ -13,7 +13,7 @@ function CheckOut(props) {
     }
 
     let order = {
-      // this will change in the future
+      // this will change in the future it is currently a TEST
       userId: userInfo.userId,
       OrderDate: new Date(),
       Status: "pending-submission",

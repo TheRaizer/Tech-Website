@@ -1,3 +1,4 @@
+// all the actions that can be used in the SubmissionErrorsReducer
 export const ACTION_TYPES = {
   SHORT_PASSWORD: "SHORT_PASSWORD",
   LONG_PASSWORD: "LONG_PASSWORD",

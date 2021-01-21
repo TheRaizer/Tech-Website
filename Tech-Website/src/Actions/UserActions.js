@@ -1,7 +1,8 @@
 import { users } from "./api";
 
 export const isExistingUser = async (email) => {
-  // this is not kept in the store so it does not need a dispatch function
+  /* this function checks if there is an existing user and returns
+  a user if there is and undefined if there isnt*/
   try {
     const response = await users().isExistingUser(email);
     return response.data;

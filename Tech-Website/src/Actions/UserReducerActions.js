@@ -1,5 +1,6 @@
 import { users } from "./api";
 
+// actions that can be used in the persistent UserReducer
 export const ACTION_TYPES = {
   CREATE: "CREATE_USER",
   UPDATE: "UPDATE_USER",
@@ -12,6 +13,7 @@ export const ACTION_TYPES = {
 };
 
 export const fetchUsername = (id) => (dispatch) => {
+  // fetches a username which is dispatched to the UserReducer
   users()
     .fetchUsernameById(id)
     .then((response) => {
@@ -29,6 +31,10 @@ export const fetchUserByEmailandPassword = (
   onFailure,
   onSuccesful
 ) => (dispatch) => {
+  /* fetches a user by email and password, then dispatches the users username to the 
+  UserReducer. If it was succesful it will run a onSuccesful function passing in the
+  userId */
+
   users()
     .fetchUserByEmailandPassword(email, password)
     .then((response) => {
@@ -46,6 +52,8 @@ export const fetchUserByEmailandPassword = (
 };
 
 export const fetchAllUsers = () => (dispatch) => {
+  /* fetches all the users and dispatches the data to the
+  UserReducer. */
   users()
     .fetchAll()
     .then((response) => {
@@ -58,6 +66,8 @@ export const fetchAllUsers = () => (dispatch) => {
 };
 
 export const createUser = (newUser, onSuccessful) => (dispatch) => {
+  // creates a user and runs a onSuccesful callback if no error is caught. Dispatches to UserReducer.
+
   users()
     .createUser(newUser)
     .then((response) => {
@@ -71,6 +81,7 @@ export const createUser = (newUser, onSuccessful) => (dispatch) => {
 };
 
 export const updateUser = (id, updatedUser, onSuccessful) => (dispatch) => {
+  // updates a user given the proper data, then runs a callback if succesful. Dispatches to UserReducer.
   users()
     .updateUser(id, updatedUser)
     .then((response) => {
@@ -84,6 +95,7 @@ export const updateUser = (id, updatedUser, onSuccessful) => (dispatch) => {
 };
 
 export const deleteUser = (id, onSuccessful) => (dispatch) => {
+  // deletes a user by id and runs a callback if succesful. Dispatches to UserReducer.
   users()
     .deleteUser(id)
     .then(() => {
@@ -97,6 +109,7 @@ export const deleteUser = (id, onSuccessful) => (dispatch) => {
 };
 
 export const fetchUser = (id) => (dispatch) => {
+  // fetches a user given an id. Dispatches to UserReducer.
   users()
     .fetchById(id)
     .then((response) => {
