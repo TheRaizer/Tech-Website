@@ -12,6 +12,12 @@ export function ProductReducer(state = initialState, action) {
         ...state,
         products: action.payload,
       };
+    case ACTION_TYPES.FETCH_ALL:
+      console.log("Fetched all ", action.payload);
+      return {
+        ...state,
+        products: action.payload,
+      };
     default:
       return state;
   }

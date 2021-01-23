@@ -3,6 +3,7 @@ import { products } from "./api";
 // actions that are used in the ProductReducer
 export const ACTION_TYPES = {
   FETCH_BY_CATEGORY: "FETCH_BY_CATEGORY",
+  FETCH_ALL: "FETCH_ALL",
 };
 
 export const fetchProductsByCategoryCode = (categoryCode) => (dispatch) => {
@@ -15,6 +16,18 @@ export const fetchProductsByCategoryCode = (categoryCode) => (dispatch) => {
     .then((response) => {
       dispatch({
         type: ACTION_TYPES.FETCH_BY_CATEGORY,
+        payload: response.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const fetchAllProducts = () => (dispatch) => {
+  products()
+    .getProducts()
+    .then((response) => {
+      dispatch({
+        type: ACTION_TYPES.FETCH_ALL,
         payload: response.data,
       });
     })

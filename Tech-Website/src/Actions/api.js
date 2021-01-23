@@ -43,5 +43,6 @@ export function products(url = baseUrl + "Products/") {
       axios.get(url + categoryCode + "/get-by-category"),
     getProductCategoryByCode: (categoryCode) =>
       axios.get(url + categoryCode + "/get-category"),
+    getProducts: () => axios.get(url),
   };
 }

@@ -1,20 +1,21 @@
 import React, { useEffect, useContext, useState } from "react";
 import * as productActions from "../../Actions/ProductsReducerActions";
-import * as orderActions from "../../Actions/OrderReducerActions";
-import { getPendingOrder } from "../../Actions/OrderActions";
-import { createOrderProduct } from "../../Actions/OrderProductActions";
 import { getProductCategory } from "../../Actions/ProductActions";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { UserIdContext } from "../../Contexts/UserIdContext";
-import { v4 as uuidv4 } from "uuid";
 import styles from "./part-shop.module.css";
 
 //fetch data depending on the useParams() id from redux store and create a props that can be given to the PartShop Component
 function PartShop(props) {
+  const { userInfo, setUserInfo } = useContext(UserIdContext); //sets a persistent username held in a context
   const { fetchProductsByCategoryCode, products } = props;
   const { categoryCode } = useParams();
   const [category, setCategory] = useState("...loading");
+  const [confirmationWindow, setConfirmationWindow] = useState({
+    open: false,
+    product: {},
+  });
 
   useEffect(() => {
     fetchProductsByCategoryCode(categoryCode);
@@ -25,76 +26,95 @@ function PartShop(props) {
   const expensiveProduct = products.find((x) => x.productValueTypeCode === "2");
   const budgetProduct = products.find((x) => x.productValueTypeCode === "0");
   const bestProduct = products.find((x) => x.productValueTypeCode === "1");
+  console.log(userInfo.prodNumsInCart);
+  const AddToCart = (product) => {
+    setUserInfo({
+      ...userInfo,
+      prodNumsInCart: [...userInfo.prodNumsInCart, product.productNumber],
+    });
+  };
+
+  const closeConfirmationWindow = () => {
+    document.body.style.overflow = "auto";
+    setConfirmationWindow({ open: false, product: {} });
+  };
 
   return (
     <div>
       <section className="header">
         <h1 className={styles.heading}>
-          The Expensive, Budget, and Best of {category}
+          The Expensive, Budget, and Best of {category ?? "...loading"}
         </h1>
       </section>
+      {confirmationWindow.open ? (
+        <section>
+          <div className={styles.darkenedLayer}></div>
+          <div className={styles.confirmationWindow}>
+            <h3>Do you wish to purchase a</h3>
+            <h3>{confirmationWindow.product.productName}</h3>
+            <button
+              onClick={() => {
+                closeConfirmationWindow();
+                AddToCart(confirmationWindow.product);
+              }}
+            >
+              Yes
+            </button>
+            <button onClick={closeConfirmationWindow}>No</button>
+          </div>
+        </section>
+      ) : (
+        <div></div>
+      )}
       <h2>The Expensive</h2>
-      <Product product={expensiveProduct} {...props} />
+      <Product
+        product={expensiveProduct}
+        setConfirmationWindow={setConfirmationWindow}
+        {...props}
+      />
       <h2>The Budget</h2>
-      <Product product={budgetProduct} {...props} />
+      <Product
+        product={budgetProduct}
+        setConfirmationWindow={setConfirmationWindow}
+        {...props}
+      />
       <h2>The Best</h2>
-      <Product product={bestProduct} {...props} />
+      <Product
+        product={bestProduct}
+        setConfirmationWindow={setConfirmationWindow}
+        {...props}
+      />
     </div>
   );
 }
 
 const Product = (props) => {
-  const { userInfo } = useContext(UserIdContext); //sets a persistent username held in a context
-
-  const AddToCart = (product) => {
-    const pendingOrder = getPendingOrder();
-    pendingOrder.then((pendingOrder) => {
-      // check if pending order exists by checking if orderId is null
-      if (pendingOrder.orderId != null) {
-        console.log("pending order exists");
-        const newOrderProduct = {
-          productId: product.productId,
-          orderId: pendingOrder.orderId,
-          paidPrice: product.currentPrice,
-          paidProductName: product.productName,
-        };
-
-        createOrderProduct(newOrderProduct);
-      } else {
-        console.log("No pending order so creating one");
-        let order = {
-          userId: userInfo.userId,
-          orderDate: new Date(),
-          statusCode: "0",
-          deliveryAddress: "n/a",
-          orderUUID: uuidv4(),
-        };
-        props.createOrder(order, (orderId) => {
-          const newOrderProduct = {
-            productId: product.productId,
-            orderId: orderId,
-            paidPrice: product.currentPrice,
-            paidProductName: product.productName,
-          };
-          createOrderProduct(newOrderProduct);
-        });
-      }
-    });
-  };
+  const { userInfo } = useContext(UserIdContext);
 
   return (
     <section>
       <section>
         {userInfo.hasSignedIn ? (
           props.product?.stock > 0 ? (
-            <button onClick={() => AddToCart(props.product)}>
+            <div
+              onClick={() => {
+                props.setConfirmationWindow({
+                  open: true,
+                  product: props.product,
+                });
+                document.body.style.overflow = "hidden";
+              }}
+              className={styles.addToCart}
+            >
               Add To Cart
-            </button>
+            </div>
           ) : (
-            <p>out of stock</p>
+            <div className={styles.addToCart}>out of stock</div>
           )
         ) : (
-          <p>Cannot Add to cart if not signed in</p>
+          <div className={styles.addToCart}>
+            Cannot Add to cart if not signed in
+          </div>
         )}
       </section>
       <h5>{props.product?.productDescription ?? "loading..."}</h5>
@@ -108,7 +128,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchProductsByCategoryCode: productActions.fetchProductsByCategoryCode,
-  createOrder: orderActions.createOrder,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PartShop);

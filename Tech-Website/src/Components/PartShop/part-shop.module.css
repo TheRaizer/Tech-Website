@@ -4,6 +4,88 @@
   font-size: 300%;
 }
 
+.darkenedLayer {
+  background-color: rgba(0, 0, 0, 0.473);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 50%;
+  left: 50%;
+  margin-top: -50vh;
+  margin-left: -50vw;
+}
+
+.confirmationWindow {
+  background-color: azure;
+  position: fixed;
+  width: 30%;
+  height: 40%;
+  top: 50%;
+  left: 50%;
+  margin-top: -10%;
+  margin-left: -15%;
+
+  text-align: center;
+  border-radius: 10px;
+  border-width: 5px;
+  border-style:outset;
+  box-shadow: 3px 3px 6px 5px rgba(0, 0, 0, 0.19);
+}
+
+.confirmationWindow h3 {
+  font-size: 200%;
+}
+
+.confirmationWindow button {
+  background-color: rgb(237, 240, 245);
+
+  width: 15%;
+  height: 10%;
+  margin: 15% 5% 5% 5%;
+  border-radius: 5px;
+}
+
+.confirmationWindow button:hover {
+  background-color: rgb(195, 198, 202);
+}
+
+.confirmationWindow button:active {
+  background-color: rgb(157, 160, 163);
+}
+
+.addToCart {
+  width: 10%;
+
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+
+  text-align: center;
+  font-size: larger;
+
+  border-radius: 5px;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2%;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  background-color: aliceblue;
+}
+
+.addToCart:hover{
+  background-color: rgb(191, 196, 201);
+}
+
+.addToCart:active {
+  background-color: rgb(118, 121, 124);
+}
+
 h5 {
   color: black;
   font-weight: bold;

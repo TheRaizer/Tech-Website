@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeadingInfo from "./HeadingInfo/HeadingInfo";
 import ExtraChoices from "./ExtraChoices/ExtraChoices";
 import ImageTransitionSection from "./ImageTransition/ImageTransition";
@@ -8,6 +8,9 @@ import PartsChoices from "./PartsChoices/PartsChoices";
 import { persistor } from "../Actions/store";
 
 function Home() {
+  useEffect(() => {
+    document.body.style.overflow = "auto";
+  }, []);
   return (
     <section>
       <HeadingInfo />
