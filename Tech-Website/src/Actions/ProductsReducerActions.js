@@ -22,7 +22,7 @@ export const fetchProductsByCategoryCode = (categoryCode) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const fetchAllProducts = () => (dispatch) => {
+export const fetchAllProducts = (onSuccesful) => (dispatch) => {
   products()
     .getProducts()
     .then((response) => {
@@ -30,6 +30,7 @@ export const fetchAllProducts = () => (dispatch) => {
         type: ACTION_TYPES.FETCH_ALL,
         payload: response.data,
       });
+      onSuccesful(response.data);
     })
     .catch((err) => console.log(err));
 };

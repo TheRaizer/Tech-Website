@@ -3,16 +3,16 @@ import { connect } from "react-redux";
 import { UserIdContext } from "../../Contexts/UserIdContext";
 import * as actions from "../../Actions/OrderReducerActions";
 import { getOrderByUUID } from "../../Actions/OrderActions";
+import "./user-orders.css";
 
 function UserOrders(props) {
   const { fetchUserOrders, orderUUIDs } = props;
   const { userInfo } = useContext(UserIdContext);
   const [hasLoaded, setHasLoaded] = useState(false);
   useEffect(() => {
-    fetchUserOrders(userInfo.userId, () => {
-      setHasLoaded(true);
-    });
+    fetchUserOrders(userInfo.userId, () => setHasLoaded(true));
   }, [fetchUserOrders, userInfo.userId]);
+
   if (!hasLoaded) {
     return <h1>Loading Orders...</h1>;
   }
@@ -20,9 +20,13 @@ function UserOrders(props) {
   if (orderUUIDs == null || orderUUIDs.length <= 0) {
     return <h1>No Orders</h1>;
   } else {
-    return orderUUIDs.map((orderUUID) => {
-      return <Order key={orderUUID} orderUUID={orderUUID} />;
-    });
+    return (
+      <section id="orders-section">
+        {orderUUIDs.map((orderUUID) => {
+          return <Order key={orderUUID} orderUUID={orderUUID} />;
+        })}
+      </section>
+    );
   }
 }
 
@@ -51,25 +55,41 @@ const Order = (props) => {
       });
     });
   }, [orderUUID]);
+
   return (
-    <section>
-      <p>OrderInfo:</p>
-      <p>Order ID: {orderUUID}</p>
-      <p>Date of Order: {orderInfo.dateOfOrder}</p>
-      <p>Delivery Address: {orderInfo.deliveryAddress}</p>
-
-      {orderInfo.orderProducts.map((orderProduct, index) => {
-        return (
-          <section key={orderProduct.orderProductId}>
-            <p>
-              Product {index + 1}: {orderProduct.paidProductName} Cost: $
-              {orderProduct.paidPrice}
-            </p>
-          </section>
-        );
-      })}
-
-      <p>Total Cost: ${orderInfo.totalCost}</p>
+    <section className="order">
+      <h3> OrderInfo:</h3>
+      <div>
+        <p>
+          <b>Order ID:</b> {orderUUID}
+        </p>
+        <p>
+          <b>Date of Order: </b>
+          {orderInfo.dateOfOrder}
+        </p>
+        <p>
+          <b>Delivery Address: </b>
+          {orderInfo.deliveryAddress}
+        </p>
+      </div>
+      <div>
+        <h3>Products</h3>
+        {orderInfo.orderProducts.map((orderProduct, index) => {
+          return (
+            <section key={orderProduct.orderProductId}>
+              <p>
+                <b>Product {index + 1}:</b> {orderProduct.paidProductName}
+              </p>
+              <p>
+                <b>Cost: </b>${parseFloat(orderProduct.paidPrice).toFixed(2)}
+              </p>
+            </section>
+          );
+        })}
+      </div>
+      <p id="total-cost">
+        <b>Total Cost: </b>${orderInfo.totalCost}
+      </p>
     </section>
   );
 };

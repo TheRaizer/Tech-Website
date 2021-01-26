@@ -24,7 +24,7 @@ export const createOrder = (newOrder, addOrderProductOnCreate) => (
     .catch((err) => console.log(err));
 };
 
-export const fetchUserOrders = (userId, onSuccess) => (dispatch) => {
+export const fetchUserOrders = (userId, hasFinished) => (dispatch) => {
   /* this function gets all of a users orders, dispatching those orders to the
   OrderReducer to have each orders uuids stored in the state.*/
 
@@ -35,7 +35,15 @@ export const fetchUserOrders = (userId, onSuccess) => (dispatch) => {
         type: ACTION_TYPES.FETCH_USER_ORDERS,
         payload: response.data,
       });
-      onSuccess();
+      hasFinished();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      dispatch({
+        type: ACTION_TYPES.FETCH_USER_ORDERS,
+        payload: [],
+      });
+
+      hasFinished();
+      console.log(err);
+    });
 };

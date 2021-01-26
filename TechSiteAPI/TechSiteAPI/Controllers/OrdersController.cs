@@ -40,7 +40,7 @@ namespace TechSiteAPI.Controllers
             return order;
         }
 
-        //GET: api/Orders/{UUID}/get-order-by-UUID
+        //GET: api/Orders/{UUID}/get-order-by-UUID 
         [HttpGet("{UUID}/get-order-by-UUID")]
         public async Task<ActionResult<Order>> GetOrderByUUID(string UUID)
         {

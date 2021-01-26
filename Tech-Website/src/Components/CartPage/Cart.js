@@ -1,18 +1,27 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { createOrderProduct } from "../../Actions/OrderProductActions";
 import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
 import * as orderActions from "../../Actions/OrderReducerActions";
 import * as productActions from "../../Actions/ProductsReducerActions";
 import { UserIdContext } from "../../Contexts/UserIdContext";
+import "./cart.css";
 
 function Cart(props) {
   const { userInfo, setUserInfo } = useContext(UserIdContext);
   const { fetchAllProducts, products } = props;
-  useEffect(() => {
-    fetchAllProducts();
-  }, [fetchAllProducts]);
+  const [cart, setCart] = useState([]);
 
+  useEffect(() => {
+    fetchAllProducts((prods) => {
+      userInfo.prodNumsInCart.forEach((prodNum) => {
+        setCart((cart) => [
+          ...cart,
+          prods.find((x) => x.productNumber === prodNum),
+        ]);
+      });
+    });
+  }, [fetchAllProducts, userInfo.prodNumsInCart]);
   const submitCart = () => {
     if (userInfo.prodNumsInCart.length === 0) {
       console.log("cart is empty");
@@ -40,12 +49,26 @@ function Cart(props) {
       });
     });
 
-    setUserInfo({ ...userInfo, productsInCart: [] });
+    setUserInfo({ ...userInfo, prodNumsInCart: [] });
   };
 
   return (
     <section>
-      <h1>My Cart</h1>
+      <h1 className="header">My Cart</h1>
+      <section className="products">
+        {cart.length > 0 ? (
+          cart.map((product, index) => {
+            return (
+              <section key={index}>
+                <p>Product: {product.productName}</p>
+                <p>Price: {product.price}</p>
+              </section>
+            );
+          })
+        ) : (
+          <div></div>
+        )}
+      </section>
       <button onClick={submitCart}>Submit Cart</button>
     </section>
   );

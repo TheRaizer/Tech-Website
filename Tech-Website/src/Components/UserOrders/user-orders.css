@@ -1,0 +1,26 @@
+.order {
+    background-color: cornsilk;
+    border-radius: 5%;
+    text-align: center;
+}
+
+.order p {
+    font-size: large;
+}
+
+.order h3 {
+    font-size:xx-large;
+    margin-bottom: 5%;
+    margin-top: 3%;
+}
+
+#total-cost {
+    margin-top: 5%;
+}
+
+#orders-section {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    column-gap: 2%;
+    row-gap: 15%;
+}
