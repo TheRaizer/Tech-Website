@@ -88,7 +88,68 @@ namespace TechSiteAPI.Controllers
         [HttpGet("get-pending-order")]
         public async Task<ActionResult<Order>> GetPendingOrder()
         {
-            return await _context.ORDS.FirstOrDefaultAsync(x => x.STATUS_CD == "0");
+            Order order =  await _context.ORDS.FirstOrDefaultAsync(x => x.STATUS_CD == "0");
+
+            if (order != null)
+            {
+                await _context.Entry(order).Collection(o => o.OrderProducts).LoadAsync();
+                foreach(OrderProduct op in order.OrderProducts)
+                {
+                    await _context.Entry(op).Reference(op => op.Product).LoadAsync();
+                }
+                return order;
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        // DELETE: api/Orders/{orderId}
+        [HttpDelete("{orderId}")]
+        public async Task<ActionResult<Order>> DeleteOrder(int orderId)
+        {
+            var order = await _context.ORDS.FindAsync(orderId);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            _context.ORDS.Remove(order);
+            await _context.SaveChangesAsync();
+
+            return order;
+        }
+
+        [HttpPut("{orderId}")]
+        public async Task<IActionResult> PutOrder(int orderId, Order order)
+        {
+            order.ORD_ID = orderId;
+
+            _context.Entry(order).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(orderId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
+
+        private bool OrderExists(int orderId)
+        {
+            return _context.ORDS.Any(o => o.ORD_ID == orderId);
         }
     }
 }

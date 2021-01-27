@@ -28,24 +28,55 @@ namespace TechSiteAPI.Controllers
 
         //GET: api/OrderProducts/get-orderproduct
         [HttpGet("{id}/get-orderproduct")]
-        public async Task<ActionResult<Product>> GetOrderProduct(int id)
+        public async Task<ActionResult<OrderProduct>> GetOrderProduct(int id)
         {
-            var product = await _context.PRODS.FindAsync(id);
+            var orderProduct = await _context.ORD_PRODS.FindAsync(id);
 
-            if (product == null)
+            if (orderProduct == null)
             {
                 return NotFound();
             }
-            return product;
+            return orderProduct;
         }
+
+        [HttpPut("{orderId}")]
+        public async Task<IActionResult> PutOrderProduct(int orderProductId, OrderProduct orderProduct)
+        {
+            orderProduct.ORD_PRD_ID = orderProductId;
+
+            _context.Entry(orderProduct).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderProductExists(orderProductId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
+
         //POST: api/OrderProducts/post-orderproduct
         [HttpPost("post-orderproduct")]
-        public async Task<ActionResult<Product>> PostOrderProduct(OrderProduct orderProduct)
+        public async Task<ActionResult<OrderProduct>> PostOrderProduct(OrderProduct orderProduct)
         {
             _context.ORD_PRODS.Add(orderProduct);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrderProduct", new { id = orderProduct.ORD_PRD_ID }, orderProduct);
+        }
+
+        private bool OrderProductExists(int orderProductId)
+        {
+            return _context.ORD_PRODS.Any(op => op.ORD_PRD_ID == orderProductId);
         }
     }
 

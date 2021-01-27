@@ -21,10 +21,13 @@ function UserOrders(props) {
     return <h1>No Orders</h1>;
   } else {
     return (
-      <section id="orders-section">
-        {orderUUIDs.map((orderUUID) => {
-          return <Order key={orderUUID} orderUUID={orderUUID} />;
-        })}
+      <section>
+        <h1 className="header">Orders</h1>
+        <section id="orders-section">
+          {orderUUIDs.map((orderUUID) => {
+            return <Order key={orderUUID} orderUUID={orderUUID} />;
+          })}
+        </section>
       </section>
     );
   }
@@ -43,7 +46,6 @@ const Order = (props) => {
   useEffect(() => {
     const order = getOrderByUUID(orderUUID);
     order.then((order) => {
-      console.log(order.orderDate);
       var totalCost = 0;
       order.orderProducts.forEach((x) => (totalCost += x.paidPrice));
       setOrderInfo({
@@ -71,6 +73,10 @@ const Order = (props) => {
           <b>Delivery Address: </b>
           {orderInfo.deliveryAddress}
         </p>
+        <p>
+          <b>Status Code: </b>
+          {orderInfo.statusCode}
+        </p>
       </div>
       <div>
         <h3>Products</h3>
@@ -81,14 +87,14 @@ const Order = (props) => {
                 <b>Product {index + 1}:</b> {orderProduct.paidProductName}
               </p>
               <p>
-                <b>Cost: </b>${parseFloat(orderProduct.paidPrice).toFixed(2)}
+                <b>Cost: </b>${orderProduct.paidPrice.toFixed(2)}
               </p>
             </section>
           );
         })}
       </div>
       <p id="total-cost">
-        <b>Total Cost: </b>${orderInfo.totalCost}
+        <b>Total Cost: </b>${orderInfo.totalCost.toFixed(2)}
       </p>
     </section>
   );

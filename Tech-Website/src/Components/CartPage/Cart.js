@@ -1,56 +1,33 @@
-import React, { useContext, useEffect, useState } from "react";
-import { createOrderProduct } from "../../Actions/OrderProductActions";
-import { v4 as uuidv4 } from "uuid";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as orderActions from "../../Actions/OrderReducerActions";
 import * as productActions from "../../Actions/ProductsReducerActions";
-import { UserIdContext } from "../../Contexts/UserIdContext";
+import { getPendingOrder, updateOrder } from "../../Actions/OrderActions";
 import "./cart.css";
 
-function Cart(props) {
-  const { userInfo, setUserInfo } = useContext(UserIdContext);
-  const { fetchAllProducts, products } = props;
+function Cart() {
   const [cart, setCart] = useState([]);
+  const submitCart = () => {
+    // make sure to update all the orderProducts prices with their products current price
+    getPendingOrder().then((order) => {
+      updateOrder(order.orderId, { ...order, statusCode: "1" });
+    });
+  };
 
   useEffect(() => {
-    fetchAllProducts((prods) => {
-      userInfo.prodNumsInCart.forEach((prodNum) => {
-        setCart((cart) => [
-          ...cart,
-          prods.find((x) => x.productNumber === prodNum),
-        ]);
-      });
+    getPendingOrder(() => setCart([])).then((order) => {
+      if (order == null) {
+        console.log("cart is empty");
+        return;
+      } else {
+        const cartProds = [];
+        order.orderProducts.forEach((ordProd) => {
+          cartProds.push(ordProd.product);
+        });
+        setCart(cartProds);
+      }
     });
-  }, [fetchAllProducts, userInfo.prodNumsInCart]);
-  const submitCart = () => {
-    if (userInfo.prodNumsInCart.length === 0) {
-      console.log("cart is empty");
-      return;
-    }
-
-    let order = {
-      userId: userInfo.userId,
-      orderDate: new Date(),
-      statusCode: "1",
-      deliveryAddress: "n/a",
-      orderUUID: uuidv4(),
-    };
-
-    props.createOrder(order, (orderId) => {
-      userInfo.prodNumsInCart.forEach((prodNum) => {
-        const product = products.find((x) => x.productNumber === prodNum);
-        const newOrderProduct = {
-          productId: product.productId,
-          orderId: orderId,
-          paidPrice: product.currentPrice,
-          paidProductName: product.productName,
-        };
-        createOrderProduct(newOrderProduct);
-      });
-    });
-
-    setUserInfo({ ...userInfo, prodNumsInCart: [] });
-  };
+  }, []);
 
   return (
     <section>
@@ -59,9 +36,9 @@ function Cart(props) {
         {cart.length > 0 ? (
           cart.map((product, index) => {
             return (
-              <section key={index}>
+              <section key={index} style={{ color: "white" }}>
                 <p>Product: {product.productName}</p>
-                <p>Price: {product.price}</p>
+                <p>Price: {product.currentPrice}</p>
               </section>
             );
           })
@@ -69,7 +46,11 @@ function Cart(props) {
           <div></div>
         )}
       </section>
-      <button onClick={submitCart}>Submit Cart</button>
+      {cart.length > 0 ? (
+        <button onClick={submitCart}>Submit Cart</button>
+      ) : (
+        <p style={{ color: "white" }}>Nothing in cart</p>
+      )}
     </section>
   );
 }

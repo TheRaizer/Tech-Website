@@ -7,7 +7,6 @@ const UserIdContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = usePersistedState("user_id", {
     userId: 0,
     hasSignedIn: false,
-    prodNumsInCart: [],
   });
   const user = { userInfo, setUserInfo };
 
