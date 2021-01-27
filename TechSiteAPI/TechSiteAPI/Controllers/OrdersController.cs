@@ -105,23 +105,6 @@ namespace TechSiteAPI.Controllers
             }
         }
 
-        // DELETE: api/Orders/{orderId}
-        [HttpDelete("{orderId}")]
-        public async Task<ActionResult<Order>> DeleteOrder(int orderId)
-        {
-            var order = await _context.ORDS.FindAsync(orderId);
-
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            _context.ORDS.Remove(order);
-            await _context.SaveChangesAsync();
-
-            return order;
-        }
-
         [HttpPut("{orderId}")]
         public async Task<IActionResult> PutOrder(int orderId, Order order)
         {
@@ -145,6 +128,20 @@ namespace TechSiteAPI.Controllers
                 }
             }
             return NoContent();
+        }
+
+        //GET: api/Orders/get-status"
+        [HttpGet("{statusCode}/get-status")]
+        public async Task<ActionResult<string>> GetStatusFromCode(string statusCode)
+        {
+            var codeLookUp = await _context.CD_LKUP.FirstOrDefaultAsync(x => x.TYPE == "STATUS" && x.CD_VAL == statusCode);
+
+            if (codeLookUp == null)
+            {
+                return NotFound();
+            }
+
+            return codeLookUp.DESC;
         }
 
         private bool OrderExists(int orderId)

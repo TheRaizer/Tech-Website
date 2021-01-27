@@ -15,9 +15,10 @@ export const createOrder = (newOrder, addOrderProductOnCreate) => (
   orders()
     .createOrder(newOrder)
     .then((response) => {
+      const order = response.data;
       dispatch({
         type: ACTION_TYPES.CREATE_ORDER,
-        payload: response.data,
+        payload: order,
       });
       addOrderProductOnCreate(response.data.orderId);
     })
@@ -31,9 +32,10 @@ export const fetchUserOrders = (userId, hasFinished) => (dispatch) => {
   orders()
     .fetchUserOrders(userId)
     .then((response) => {
+      const userOrders = response.data;
       dispatch({
         type: ACTION_TYPES.FETCH_USER_ORDERS,
-        payload: response.data,
+        payload: userOrders,
       });
       hasFinished();
     })

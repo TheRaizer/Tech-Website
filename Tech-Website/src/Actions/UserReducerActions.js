@@ -71,11 +71,12 @@ export const createUser = (newUser, onSuccessful) => (dispatch) => {
   users()
     .createUser(newUser)
     .then((response) => {
+      const user = response.data;
       dispatch({
         type: ACTION_TYPES.CREATE,
-        payload: response.data,
+        payload: user,
       });
-      onSuccessful(response.data.userId);
+      onSuccessful(user.userId);
     })
     .catch((err) => console.log(err));
 };
@@ -113,9 +114,10 @@ export const fetchUser = (id) => (dispatch) => {
   users()
     .fetchById(id)
     .then((response) => {
+      const user = response.data;
       dispatch({
         type: ACTION_TYPES.FETCH,
-        payload: response.data,
+        payload: user,
       });
     })
     .catch((err) => console.log(err));

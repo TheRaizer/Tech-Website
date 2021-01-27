@@ -14,9 +14,10 @@ export const fetchProductsByCategoryCode = (categoryCode) => (dispatch) => {
   products()
     .getProductsByCategoryCode(categoryCode)
     .then((response) => {
+      const productsInCategory = response.data;
       dispatch({
         type: ACTION_TYPES.FETCH_BY_CATEGORY,
-        payload: response.data,
+        payload: productsInCategory,
       });
     })
     .catch((err) => console.log(err));
@@ -26,11 +27,12 @@ export const fetchAllProducts = (onSuccesful) => (dispatch) => {
   products()
     .getProducts()
     .then((response) => {
+      const products = response.data;
       dispatch({
         type: ACTION_TYPES.FETCH_ALL,
-        payload: response.data,
+        payload: products,
       });
-      onSuccesful(response.data);
+      onSuccesful(products);
     })
     .catch((err) => console.log(err));
 };

@@ -5,7 +5,8 @@ export const isExistingUser = async (email) => {
   a user if there is and undefined if there isnt*/
   try {
     const response = await users().isExistingUser(email);
-    return response.data;
+    const user = response.data;
+    return user;
   } catch (err) {
     return console.log(err);
   }

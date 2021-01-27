@@ -64,6 +64,23 @@ namespace TechSiteAPI.Controllers
             return NoContent();
         }
 
+        // DELETE: api/OrderProducts/{orderProductId}
+        [HttpDelete("{orderProductId}")]
+        public async Task<ActionResult<OrderProduct>> DeleteOrderProduct(int orderProductId)
+        {
+            var orderProduct = await _context.ORD_PRODS.FindAsync(orderProductId);
+
+            if (orderProduct == null)
+            {
+                return NotFound();
+            }
+
+            _context.ORD_PRODS.Remove(orderProduct);
+            await _context.SaveChangesAsync();
+
+            return orderProduct;
+        }
+
         //POST: api/OrderProducts/post-orderproduct
         [HttpPost("post-orderproduct")]
         public async Task<ActionResult<OrderProduct>> PostOrderProduct(OrderProduct orderProduct)

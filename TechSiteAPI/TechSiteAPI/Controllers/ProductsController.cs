@@ -55,7 +55,8 @@ namespace TechSiteAPI.Controllers
 
             return matchingProducts;
         }
-        //GET: api/Products/get-by-category"
+
+        //GET: api/Products/get-category"
         [HttpGet("{categoryCode}/get-category")]
         public async Task<ActionResult<string>> GetCategoryFromCode(string categoryCode)
         {

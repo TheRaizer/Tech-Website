@@ -26,6 +26,7 @@ export function orders(url = baseUrl + "Orders/") {
     getPendingOrder: () => axios.get(url + "get-pending-order"),
     getOrderByUUID: (uuid) => axios.get(url + uuid + "/get-order-by-UUID"),
     updateOrder: (id, updatedRecord) => axios.put(url + id, updatedRecord),
+    getStatus: (statusCode) => axios.get(url + statusCode + "/get-status"),
   };
 }
 
@@ -36,6 +37,7 @@ export function orderProducts(url = baseUrl + "OrderProducts/") {
       axios.post(url + "post-orderproduct", newOrderProduct),
     updateOrderProduct: (id, updatedRecord) =>
       axios.put(url + id, updatedRecord),
+    deleteOrderProduct: (id) => axios.delete(url + id),
   };
 }
 

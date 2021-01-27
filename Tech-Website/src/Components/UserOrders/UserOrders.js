@@ -22,7 +22,7 @@ function UserOrders(props) {
   } else {
     return (
       <section>
-        <h1 className="header">Orders</h1>
+        <h1 className="centered-heading">Orders</h1>
         <section id="orders-section">
           {orderUUIDs.map((orderUUID) => {
             return <Order key={orderUUID} orderUUID={orderUUID} />;
