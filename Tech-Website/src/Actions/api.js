@@ -23,7 +23,7 @@ export function orders(url = baseUrl + "Orders/") {
   return {
     createOrder: (newRecord) => axios.post(url + "post-order", newRecord),
     fetchUserOrders: (id) => axios.get(url + id + "/get-user-orders"),
-    getPendingOrder: () => axios.get(url + "get-pending-order"),
+    getPendingOrder: (userId) => axios.get(url + userId + "/get-pending-order"),
     getOrderByUUID: (uuid) => axios.get(url + uuid + "/get-order-by-UUID"),
     updateOrder: (id, updatedRecord) => axios.put(url + id, updatedRecord),
     getStatus: (statusCode) => axios.get(url + statusCode + "/get-status"),

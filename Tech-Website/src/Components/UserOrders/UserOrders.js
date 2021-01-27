@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { UserIdContext } from "../../Contexts/UserIdContext";
 import * as actions from "../../Actions/OrderReducerActions";
-import { getOrderByUUID } from "../../Actions/OrderActions";
+import { getOrderByUUID, getStatus } from "../../Actions/OrderActions";
 import "./user-orders.css";
 
 function UserOrders(props) {
@@ -37,7 +37,7 @@ const Order = (props) => {
   const { orderUUID } = props;
   const [orderInfo, setOrderInfo] = useState({
     dateOfOrder: [],
-    statusCode: "",
+    status: "",
     deliveryAddress: "",
     orderProducts: [],
     totalCost: 0,
@@ -48,12 +48,14 @@ const Order = (props) => {
     order.then((order) => {
       var totalCost = 0;
       order.orderProducts.forEach((x) => (totalCost += x.paidPrice));
-      setOrderInfo({
-        dateOfOrder: order.orderDate,
-        statusCode: order.statusCode,
-        deliveryAddress: order.deliveryAddress,
-        orderProducts: order.orderProducts,
-        totalCost: totalCost,
+      getStatus(order.statusCode).then((status) => {
+        setOrderInfo({
+          dateOfOrder: order.orderDate,
+          status: status,
+          deliveryAddress: order.deliveryAddress,
+          orderProducts: order.orderProducts,
+          totalCost: totalCost,
+        });
       });
     });
   }, [orderUUID]);
@@ -75,7 +77,7 @@ const Order = (props) => {
         </p>
         <p>
           <b>Status Code: </b>
-          {orderInfo.statusCode}
+          {orderInfo.status}
         </p>
       </div>
       <div>

@@ -54,13 +54,15 @@ function PartShop(props) {
   };
 
   const AddToCart = (product) => {
-    getPendingOrder(() => onNotFound(product)).then((order) => {
-      if (order == null) {
-        return;
+    getPendingOrder(userInfo.userId, () => onNotFound(product)).then(
+      (order) => {
+        if (order == null) {
+          return;
+        }
+        addOrderProduct(order.orderId, product);
+        console.log("create orderProduct");
       }
-      addOrderProduct(order.orderId, product);
-      console.log("create orderPRoduct");
-    });
+    );
   };
 
   const closeConfirmationWindow = () => {

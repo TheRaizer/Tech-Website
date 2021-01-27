@@ -84,25 +84,34 @@ namespace TechSiteAPI.Controllers
             return CreatedAtAction("GetOrder", new { orderId = order.ORD_ID }, order);
         }
 
-        //GET: api/Orders/{id}/get-pending-order
-        [HttpGet("get-pending-order")]
-        public async Task<ActionResult<Order>> GetPendingOrder()
+        //GET: api/Orders/{userId}/get-pending-order
+        [HttpGet("{userId}/get-pending-order")]
+        public async Task<ActionResult<Order>> GetUsersPendingOrder(int userId)
         {
-            Order order =  await _context.ORDS.FirstOrDefaultAsync(x => x.STATUS_CD == "0");
-
-            if (order != null)
+            var user = await _context.USERS.FindAsync(userId);
+            if (user == null)
             {
-                await _context.Entry(order).Collection(o => o.OrderProducts).LoadAsync();
-                foreach(OrderProduct op in order.OrderProducts)
-                {
-                    await _context.Entry(op).Reference(op => op.Product).LoadAsync();
-                }
-                return order;
+                return BadRequest();
             }
-            else
+            //var orders = await _context.ORDS.Where(o => o.USER_ID == userId).ToListAsync();// if the load async doesnt load everything use this line instead
+            await _context.Entry(user).Collection(o => o.Orders).LoadAsync();
+            var orders = user.Orders.ToList();
+            if (orders == null || orders.Count == 0)
             {
                 return NotFound();
             }
+
+            var order = orders.FirstOrDefault(ord => ord.STATUS_CD == "0");
+            if(order == null)
+            {
+                return NotFound();
+            }
+            await _context.Entry(order).Collection(o => o.OrderProducts).LoadAsync();
+            foreach(OrderProduct op in order.OrderProducts)
+            {
+                await _context.Entry(op).Reference(op => op.Product).LoadAsync();
+            }
+            return order;
         }
 
         [HttpPut("{orderId}")]

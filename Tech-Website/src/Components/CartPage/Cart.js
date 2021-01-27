@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { connect } from "react-redux";
 import * as orderActions from "../../Actions/OrderReducerActions";
 import * as productActions from "../../Actions/ProductsReducerActions";
@@ -7,11 +7,13 @@ import {
   updateOrderProduct,
   deleteOrderProduct,
 } from "../../Actions/OrderProductActions";
+import { UserIdContext } from "../../Contexts/UserIdContext";
 import { getProduct } from "../../Actions/ProductActions";
 import "./cart.css";
 
 function Cart() {
   const [cart, setCart] = useState([]);
+  const { userInfo } = useContext(UserIdContext); //sets a persistent username held in a context
 
   const removeOrdProd = (ordProd) => {
     const newCart = cart.filter(
@@ -23,14 +25,14 @@ function Cart() {
 
   const submitCart = () => {
     // make sure to update all the orderProducts prices with their products current price
-    getPendingOrder().then((order) => {
+    getPendingOrder(userInfo.userId).then((order) => {
       updateOrder(order.orderId, { ...order, statusCode: "1" });
     });
     setCart([]);
   };
 
   useEffect(() => {
-    getPendingOrder(() => setCart([])).then((order) => {
+    getPendingOrder(userInfo.userId, () => setCart([])).then((order) => {
       if (order == null) {
         console.log("cart is empty");
         return;
@@ -52,7 +54,7 @@ function Cart() {
         setCart(cartProds);
       }
     });
-  }, []);
+  }, [userInfo.userId]);
 
   return (
     <section>

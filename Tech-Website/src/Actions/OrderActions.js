@@ -1,9 +1,9 @@
 import { orders } from "./api";
 
-export const getPendingOrder = async (onNotFound) => {
+export const getPendingOrder = async (userId, onNotFound) => {
   // function that returns an order that is pending and undefined if there is none
   try {
-    const response = await orders().getPendingOrder();
+    const response = await orders().getPendingOrder(userId);
     const order = response.data;
     return order;
   } catch (err) {
