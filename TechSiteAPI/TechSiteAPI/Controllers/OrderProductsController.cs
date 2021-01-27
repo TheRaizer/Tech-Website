@@ -39,7 +39,7 @@ namespace TechSiteAPI.Controllers
             return orderProduct;
         }
 
-        [HttpPut("{orderId}")]
+        [HttpPut("{orderProductId}")]
         public async Task<IActionResult> PutOrderProduct(int orderProductId, OrderProduct orderProduct)
         {
             orderProduct.ORD_PRD_ID = orderProductId;

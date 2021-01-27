@@ -6,7 +6,7 @@ export const getPendingOrder = async (onNotFound) => {
     const response = await orders().getPendingOrder();
     return response.data;
   } catch (err) {
-    if (err.response.status === 404) {
+    if (err.response?.status === 404) {
       onNotFound();
     }
     console.log(err);

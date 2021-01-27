@@ -9,3 +9,15 @@ export const createOrderProduct = async (newOrderProduct) => {
     return console.log(err);
   }
 };
+
+export const updateOrderProduct = async (orderProductId, updatedRecord) => {
+  try {
+    const response = await orderProducts().updateOrderProduct(
+      orderProductId,
+      updatedRecord
+    );
+    return response.data;
+  } catch (err) {
+    return console.log(err);
+  }
+};

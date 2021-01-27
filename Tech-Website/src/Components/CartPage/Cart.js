@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import * as orderActions from "../../Actions/OrderReducerActions";
 import * as productActions from "../../Actions/ProductsReducerActions";
 import { getPendingOrder, updateOrder } from "../../Actions/OrderActions";
+import { updateOrderProduct } from "../../Actions/OrderProductActions";
+import { getProduct } from "../../Actions/ProductActions";
 import "./cart.css";
 
 function Cart() {
@@ -12,6 +14,7 @@ function Cart() {
     getPendingOrder().then((order) => {
       updateOrder(order.orderId, { ...order, statusCode: "1" });
     });
+    setCart([]);
   };
 
   useEffect(() => {
@@ -23,6 +26,16 @@ function Cart() {
         const cartProds = [];
         order.orderProducts.forEach((ordProd) => {
           cartProds.push(ordProd.product);
+
+          // updates the prices of the products in the order.
+          var updatedOrdProd = ordProd;
+          getProduct(ordProd.productId).then((product) => {
+            if (updatedOrdProd.paidPrice !== product.currentPrice) {
+              console.log("update price");
+              updatedOrdProd.paidPrice = product.currentPrice;
+              updateOrderProduct(ordProd.orderProductId, updatedOrdProd);
+            }
+          });
         });
         setCart(cartProds);
       }

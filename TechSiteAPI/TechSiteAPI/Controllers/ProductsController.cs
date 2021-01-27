@@ -26,6 +26,19 @@ namespace TechSiteAPI.Controllers
             return await _context.PRODS.ToListAsync();
         }
 
+        //GET: api/Products/{productId}/get-product
+        [HttpGet("{productId}/get-product")]
+        public async Task<ActionResult<Product>> GetProduct(int productId)
+        {
+            var product = await _context.PRODS.FindAsync(productId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return product;
+        }
+
         //GET: api/Products/get-by-category"
         [HttpGet("{productCategoryCode}/get-by-category")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategoryCode(string productCategoryCode)

@@ -37,7 +37,7 @@ const Order = (props) => {
   const { orderUUID } = props;
   const [orderInfo, setOrderInfo] = useState({
     dateOfOrder: [],
-    status: "",
+    statusCode: "",
     deliveryAddress: "",
     orderProducts: [],
     totalCost: 0,
@@ -50,7 +50,7 @@ const Order = (props) => {
       order.orderProducts.forEach((x) => (totalCost += x.paidPrice));
       setOrderInfo({
         dateOfOrder: order.orderDate,
-        status: order.statusCode,
+        statusCode: order.statusCode,
         deliveryAddress: order.deliveryAddress,
         orderProducts: order.orderProducts,
         totalCost: totalCost,
