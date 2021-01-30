@@ -1,7 +1,6 @@
 .login-options {
     margin-left: 80%;
     text-align: center;
-    margin-top: 2%;
 }
 
 .login-options a {
@@ -11,4 +10,12 @@
     color: aliceblue;
     font-size: large;
     font-weight: bold;
+}
+
+.login-options a:hover {
+    color: rgb(181, 187, 192);
+}
+
+.login-options a:active {
+    color: rgb(130, 134, 138);
 }

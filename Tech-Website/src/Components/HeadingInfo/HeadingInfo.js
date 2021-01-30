@@ -9,7 +9,7 @@ function HeadingInfo(props) {
     return (
       <header className="header">
         <h1 className={styles.heading}>Kronis</h1>
-        <h4>{props.username}</h4>
+        <h4 className={styles.username}>Username: {props.username}</h4>
         <section className="login-options">
           <Link to="/cart">Cart</Link>
           <Link to="/orders">Order Statuses</Link>

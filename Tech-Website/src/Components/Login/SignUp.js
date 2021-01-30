@@ -134,6 +134,12 @@ function SignUp(props) {
     return false;
   };
 
+  const handleKeyPress = (evt) => {
+    if (evt.key === "Enter") {
+      submitUserInfo();
+    }
+  };
+
   if (userInfo.hasSignedIn) {
     return (
       <section className="login-form">
@@ -167,6 +173,7 @@ function SignUp(props) {
                   ? "rgba(255, 65, 65, 0.356)"
                   : "white",
             }}
+            onKeyPress={(evt) => handleKeyPress(evt)}
           />
         </div>
         <div>
@@ -185,6 +192,7 @@ function SignUp(props) {
                   ? "rgba(255, 65, 65, 0.356)"
                   : "white",
             }}
+            onKeyPress={(evt) => handleKeyPress(evt)}
           />
         </div>
         <div>
@@ -203,6 +211,7 @@ function SignUp(props) {
                   ? "rgba(255, 65, 65, 0.356)"
                   : "white",
             }}
+            onKeyPress={(evt) => handleKeyPress(evt)}
           />
           <button
             className="show-btn"
@@ -229,6 +238,7 @@ function SignUp(props) {
                 ? "rgba(255, 65, 65, 0.356)"
                 : "white",
             }}
+            onKeyPress={(evt) => handleKeyPress(evt)}
           />
           <button
             className="show-btn"

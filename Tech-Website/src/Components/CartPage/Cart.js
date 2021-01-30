@@ -11,6 +11,30 @@ import { UserIdContext } from "../../Contexts/UserIdContext";
 import { getProduct } from "../../Actions/ProductActions";
 import "./cart.css";
 
+const initCart = (userInfo, setCart) => {
+  getPendingOrder(userInfo.userId, () => setCart([])).then((order) => {
+    if (order == null) {
+      console.log("cart is empty");
+      return;
+    } else {
+      const cartProds = [];
+      order.orderProducts.forEach((ordProd) => {
+        cartProds.push(ordProd);
+
+        // updates the prices of the products in the order.
+        var updatedOrdProd = ordProd;
+        getProduct(ordProd.productId).then((product) => {
+          if (updatedOrdProd.paidPrice !== product.currentPrice) {
+            updatedOrdProd.paidPrice = product.currentPrice;
+            updateOrderProduct(ordProd.orderProductId, updatedOrdProd);
+          }
+        });
+      });
+      setCart(cartProds);
+    }
+  });
+};
+
 function Cart() {
   const [cart, setCart] = useState([]);
   const { userInfo } = useContext(UserIdContext); //sets a persistent username held in a context
@@ -32,29 +56,8 @@ function Cart() {
   };
 
   useEffect(() => {
-    getPendingOrder(userInfo.userId, () => setCart([])).then((order) => {
-      if (order == null) {
-        console.log("cart is empty");
-        return;
-      } else {
-        const cartProds = [];
-        order.orderProducts.forEach((ordProd) => {
-          cartProds.push(ordProd);
-
-          // updates the prices of the products in the order.
-          var updatedOrdProd = ordProd;
-          getProduct(ordProd.productId).then((product) => {
-            if (updatedOrdProd.paidPrice !== product.currentPrice) {
-              console.log("update price");
-              updatedOrdProd.paidPrice = product.currentPrice;
-              updateOrderProduct(ordProd.orderProductId, updatedOrdProd);
-            }
-          });
-        });
-        setCart(cartProds);
-      }
-    });
-  }, [userInfo.userId]);
+    initCart(userInfo, setCart);
+  }, [userInfo, userInfo.userId]);
 
   return (
     <section>
@@ -73,9 +76,11 @@ function Cart() {
         )}
       </section>
       {cart.length > 0 ? (
-        <button onClick={submitCart}>Submit Cart</button>
+        <button onClick={submitCart} id="submit-cart">
+          Submit Cart
+        </button>
       ) : (
-        <p style={{ color: "white" }}>Nothing in cart</p>
+        <p id="empty-cart">Cart is Empty</p>
       )}
     </section>
   );
@@ -84,9 +89,13 @@ function CartProduct(props) {
   const { ordProd, removeOrdProd } = props;
 
   return (
-    <section style={{ color: "white" }} id="cart-product">
-      <p>Product: {ordProd.product.productName}</p>
-      <p>Price: ${ordProd.product.currentPrice.toFixed(2)}</p>
+    <section id="cart-product">
+      <p>
+        <b>Product:</b> {ordProd.product.productName}
+      </p>
+      <p>
+        <b>Price:</b> ${ordProd.product.currentPrice.toFixed(2)}
+      </p>
       <button onClick={() => removeOrdProd(ordProd)}>Remove from Cart</button>
     </section>
   );

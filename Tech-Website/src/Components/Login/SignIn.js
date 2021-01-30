@@ -33,6 +33,12 @@ function SignIn(props) {
       }
     );
   };
+
+  const handleKeyPress = (evt) => {
+    if (evt.key === "Enter") {
+      submitCredentials();
+    }
+  };
   // if they have signed in then don't allow them to try to sign in again
   if (userInfo.hasSignedIn) {
     return (
@@ -56,6 +62,7 @@ function SignIn(props) {
             style={{
               backgroundColor: isValid ? "white" : "rgba(255, 65, 65, 0.356)",
             }}
+            onKeyPress={(evt) => handleKeyPress(evt)}
           />
         </div>
         <div>
@@ -69,6 +76,7 @@ function SignIn(props) {
             style={{
               backgroundColor: isValid ? "white" : "rgba(255, 65, 65, 0.356)",
             }}
+            onKeyPress={(evt) => handleKeyPress(evt)}
           />
           <button
             className="show-btn"
