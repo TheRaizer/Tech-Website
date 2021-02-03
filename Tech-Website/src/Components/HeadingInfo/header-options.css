@@ -1,9 +1,9 @@
-.login-options {
+.header-options {
     margin-left: 80%;
     text-align: center;
 }
 
-.login-options a {
+.header-options a {
     display: inline-block;
     padding: 2% 2% 2% 2%;
     text-decoration: none;
@@ -12,10 +12,10 @@
     font-weight: bold;
 }
 
-.login-options a:hover {
+.header-options a:hover {
     color: rgb(181, 187, 192);
 }
 
-.login-options a:active {
+.header-options a:active {
     color: rgb(130, 134, 138);
 }

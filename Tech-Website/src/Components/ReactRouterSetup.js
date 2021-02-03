@@ -2,11 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Home from "./Home";
 import Shop from "./Shop";
-import PartShop from "./PartShop/PartShop";
-import SignUp from "./Login/SignUp";
-import SignIn from "./Login/SignIn";
+import PartShopState from "./PartShop/PartShopState";
+import SignUpState from "./Login/SignUpState";
+import SignInState from "./Login/SignInState";
 import UserOrders from "./UserOrders/UserOrders";
-import Cart from "./CartPage/Cart";
+import CartState from "./CartPage/CartState";
 
 function ReactRouterSetup() {
   return (
@@ -20,18 +20,18 @@ function ReactRouterSetup() {
           <Shop />
         </Route>
         <Route path="/sign-in">
-          <SignIn />
+          <SignInState />
         </Route>
         <Route path="/sign-up">
-          <SignUp />
+          <SignUpState />
         </Route>
         <Route path="/cart">
-          <Cart />
+          <CartState />
         </Route>
         <Route path="/orders">
           <UserOrders />
         </Route>
-        <Route path="/part/:categoryCode" children={<PartShop />}></Route>
+        <Route path="/part/:categoryCode" children={<PartShopState />}></Route>
         {/* The * path means it will run on any path */}
         <Route
           path="*"
